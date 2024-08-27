@@ -1,6 +1,34 @@
 import React from 'react'
 
 function Head() {
+
+    const navItems = [
+        {
+            name : "Swiggy Corporate",
+            image : "fi-ss-briefcase"
+        },
+        {
+            name : "Search",
+            image : "fi-rr-search"
+        },
+        {
+            name : "Offers",
+            image : "fi-rr-badge-percent"
+        },
+        {
+            name : "Help",
+            image : "fi-rr-exclamation"
+        },
+        {
+            name : "Sign in",
+            image : "fi-bs-user"
+        },
+        {
+            name : "Cart",
+            image : "fi-rr-shopping-cart"
+        }
+    ]
+
   return (
     <div className='w-full shadow-md h-20 flex justify-center items-center'>
         <div className='flex justify-around w-[80%]'>
@@ -11,31 +39,15 @@ function Head() {
                     <i className="text-2xl text-orange-500 fi fi-rs-angle-small-down"></i>
                 </div>
             </div>
-            <div className='flex items-center gap-12'>
-                <div className='flex items-center gap-2'>
-                    <i class="fi fi-ss-briefcase"></i>
-                    <p>Swiggy Corporate</p>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <i class="fi fi-rr-search"></i>
-                    <p>Search</p>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <i class="fi fi-rs-badge-percent"></i>
-                    <p>Offers</p>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <i class="fi fi-rr-exclamation"></i>
-                    <p>Help</p>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <i class="fi fi-bs-user"></i>
-                    <p>Sign in</p>
-                </div>
-                <div className='flex items-center gap-2'>
-                    <i class="fi fi-rr-shopping-cart"></i>
-                    <p>Cart</p>
-                </div>
+            <div className='flex items-center gap-14'>
+                {
+                    navItems.map((data) => (
+                        <div className='flex items-center gap-3'>
+                            <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
+                            <p className='text-lg font-medium text-gray-700'>{data.name}</p>
+                        </div>
+                    ))
+                }
             </div>
         </div>
     </div>

@@ -1,9 +1,13 @@
+import Body from "./components/Body"
 import Head from "./components/Head"
 
 function App() {
 
   return (
-    <Head/>
+    <div>
+        <Head/>
+        <Body/>
+    </div>
   )
 }
 
