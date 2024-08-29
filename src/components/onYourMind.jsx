@@ -16,8 +16,6 @@ function OnYourMind() {
         fetchData()
     }, [])
 
-    console.log(value)
-
     function handleNext() {
         value >= 180 ? "" : setValue((prev) => prev + 45)    
     }
@@ -28,7 +26,7 @@ function OnYourMind() {
 
   return (
     <div>
-        <div className='flex justify-between mt-5'>
+        <div className='flex justify-between mt-3'>
             <h1 className='font-bold text-2xl'>What's on your mind</h1>
             <div className='flex gap-4'>
                 <div onClick={handlePrev} className={`cursor-pointer rounded-full w-9 h-9 flex justify-center items-center ` + (value <= 0 ? "bg-gray-100" : "bg-gray-200")}>
@@ -41,14 +39,14 @@ function OnYourMind() {
         </div>    
         <div
             style={{translate : `-${value}%`}}
-            className={`flex mt-4 duration-300`}>
+            className={`flex mt-2 duration-300`}>
             {
                 data.map((item) => (
                     <img className='w-40' src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/${item.imageId}`}/>
                 ))
             }
         </div>
-        <hr className='border'/>
+        <hr className='border mt-8'/>
     </div>
   )
 }
