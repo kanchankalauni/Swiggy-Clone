@@ -1,22 +1,22 @@
 import React, { useEffect, useState } from 'react'
 import Card from './Card';
 
-function TopRestaurant() {
+function TopRestaurant({data}) {
 
-    const [data, setData] = useState([])
+    // const [data, setData] = useState([])
 
     const [value, setValue] = useState(0);
 
-    async function fetchData() {
-        const data = await fetch("https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=28.65200&lng=77.16630&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
-        const result = await data.json()
-        // console.log(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-        setData(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
-    }
+    // async function fetchData() {
+    //     const data = await fetch("https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=28.65200&lng=77.16630&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+    //     const result = await data.json()
+    //     // console.log(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+    //     setData(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+    // }
 
-    useEffect(() => {
-        fetchData()
-    }, [])
+    // useEffect(() => {
+    //     fetchData()
+    // }, [])
 
     function handleNext() {
         value >= 450 ? "" : setValue((prev) => prev + 50)    

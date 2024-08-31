@@ -1,20 +1,20 @@
 import React, { useEffect, useState } from 'react'
 
-function OnYourMind() {
+function OnYourMind({data}) {
 
-    const [data, setData] = useState([])
+    // const [data, setData] = useState([])
 
     const [value, setValue] = useState(0);
 
-    async function fetchData() {
-        const data = await fetch("https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=28.65200&lng=77.16630&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
-        const result = await data.json()
-        setData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info)
-    }
+    // async function fetchData() {
+    //     const data = await fetch("https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=28.65200&lng=77.16630&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+    //     const result = await data.json()
+    //     setData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info)
+    // }
 
-    useEffect(() => {
-        fetchData()
-    }, [])
+    // useEffect(() => {
+    //     fetchData()
+    // }, [])
 
     function handleNext() {
         value >= 180 ? "" : setValue((prev) => prev + 45)    
