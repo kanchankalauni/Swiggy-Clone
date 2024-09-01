@@ -1,10 +1,10 @@
 import React from 'react'
 
-function Card({info}) {
-    
+function Card({info, currValue = false}) {
+    console.log(info)
   return (
     <div className='hover:scale-95 duration-300'>
-        <div className='min-w-[295px] h-[182px] relative'>
+        <div className={`${currValue ? " w-[200px] " : " min-w-[295px] "} h-[182px] relative`}>
             <img className='w-full h-full object-cover rounded-2xl' src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_600/${info?.cloudinaryImageId}`}/>
             <div className='bg-gradient-to-t from-black from-1% to-transparent to-40% w-full h-full absolute bottom-0 rounded-2xl'></div>
             <h2 className='absolute bottom-0 text-white text-2xl font-bold px-3 pb-1'>{info?.aggregatedDiscountInfoV3?.header + " " + info?.aggregatedDiscountInfoV3?.subHeader}</h2>

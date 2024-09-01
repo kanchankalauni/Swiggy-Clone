@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import OnYourMind from './onYourMind';
 import TopRestaurant from './TopRestaurant';
+import OnlineFoodDelivery from './OnlineFoodDelivery';
 
 function Body() {
 
@@ -24,6 +25,7 @@ function Body() {
         <div className='w-[75%] mx-auto mt-1 overflow-hidden'>
             <OnYourMind data={onYourMindData}/>
             <TopRestaurant data={topRestaurantData}/>
+            <OnlineFoodDelivery data={topRestaurantData}/>
         </div>
     </div>
   )
