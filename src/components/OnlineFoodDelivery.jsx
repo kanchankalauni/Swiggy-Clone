@@ -1,5 +1,5 @@
 import React from 'react'
-import Card from './Card'
+import RestaurantCard from './RestaurantCard'
 
 function OnlineFoodDelivery({data}) {
   return (
@@ -8,7 +8,7 @@ function OnlineFoodDelivery({data}) {
         <div className="grid grid-cols-4 gap-10 mt-5">
             {
                 data.map(({info}) => (
-                    <Card info ={info} currValue={true} />
+                    <RestaurantCard info ={info} currValue={true} />
                 ))
             }
         </div>

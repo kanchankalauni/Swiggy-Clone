@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react'
-import Card from './Card';
+import RestaurantCard from './RestaurantCard';
 
 function TopRestaurant({data}) {
 
@@ -42,7 +42,7 @@ function TopRestaurant({data}) {
         <div className={`flex mt-4 gap-5 duration-300`} style={{translate : `-${value}%`}}>
             {
                 data.map(({info}) => (
-                    <Card info ={info} />
+                    <RestaurantCard info ={info} />
                 ))
             }
         </div>
