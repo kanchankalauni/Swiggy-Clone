@@ -2,9 +2,9 @@ import React from 'react'
 import { Link } from 'react-router-dom'
 
 function RestaurantCard({info, link, currValue = false}) {
-    console.log(info, link.split("/")[5])
+    // console.log(info, link.split("/").at(-1))
   return (
-    <Link to={`/restaurantMenu/${link.split("/")[5]}`}>
+    <Link to={`/restaurantMenu/${link.split("/").at(-1)}`}>
         <div className='hover:scale-95 duration-300'>
             <div className={`${currValue ? " w-[260px] " : " min-w-[295px] "} h-[182px] relative`}>
                 <img className='w-full h-full object-cover rounded-2xl' src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_600/${info?.cloudinaryImageId}`}/>

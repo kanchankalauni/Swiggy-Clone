@@ -4,9 +4,9 @@ import { useParams } from 'react-router-dom'
 function RestaurantMenu() {
     const {id} = useParams()
     // console.log(id.split("-")[7].split("rest")[1])
-    // console.log(id.split("-").at(-1)[0])
+    // console.log(id.split("-").at(-1).split("rest")[1])
     // console.log(id.match(/\d+/)[0])
-    let mainId = id.split("-")[7].split("rest")[1]
+    let mainId = id.split("-").at(-1).split("rest")[1]
 
     const [menuData, setMenuData] = useState("")
 
