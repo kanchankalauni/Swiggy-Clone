@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import RestaurantCard from './RestaurantCard';
 
 function TopRestaurant({data}) {
-
+    console.log(data)
     // const [data, setData] = useState([])
 
     const [value, setValue] = useState(0);
@@ -41,8 +41,8 @@ function TopRestaurant({data}) {
         </div>    
         <div className={`flex mt-4 gap-5 duration-300`} style={{translate : `-${value}%`}}>
             {
-                data.map(({info}) => (
-                    <RestaurantCard info ={info} />
+                data.map(({info, cta : {link}}) => (
+                    <RestaurantCard info ={info} link={link} />
                 ))
             }
         </div>
