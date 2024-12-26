@@ -36,7 +36,7 @@ function OnYourMind({data}) {
                     <i className={`text-xl mt-1 fi fi-rr-arrow-right ` + (value >= 180 ? "text-gray-300" : "text-gray-800")}></i>
                 </div>
             </div>
-        </div>    
+        </div>  
         <div
             style={{translate : `-${value}%`}}
             className={`flex mt-2 duration-300`}>

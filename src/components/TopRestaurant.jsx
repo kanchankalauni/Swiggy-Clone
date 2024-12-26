@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import RestaurantCard from './RestaurantCard';
 
 function TopRestaurant({data}) {
-    console.log(data)
+    // console.log(data)
     // const [data, setData] = useState([])
 
     const [value, setValue] = useState(0);
