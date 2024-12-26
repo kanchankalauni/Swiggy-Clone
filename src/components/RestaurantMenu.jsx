@@ -12,6 +12,7 @@ function RestaurantMenu() {
     const [menuData, setMenuData] = useState([])
     const [discountData, setDiscountData] = useState([])
     const [value, setValue] = useState(0);
+    const [currIndex, setCurrIndex] = useState(null);
 
     function handleNext() {
         
@@ -36,6 +37,10 @@ function RestaurantMenu() {
     useEffect(() => {
         fetchMenu()
     }, [])
+
+    function toogleFun(i) {
+        setCurrIndex( i === currIndex ? null : i )
+    }
 
   return (
     <div className='w-full'>
@@ -92,8 +97,25 @@ function RestaurantMenu() {
             </div>
             <div>
                 {
-                    menuData.map(({card : {card : {itemCards, title}}}) => (
-                        <h1>{title} ({itemCards.length})</h1>
+                    menuData.map(({card : {card : {itemCards, title}}}, i) => (
+                        <div>
+                            <div className='flex justify-between'>
+                                <h1>{title} ({itemCards.length})</h1>
+                                <i class="fi text-2xl fi-rs-angle-small-up"
+                                 onClick={() => toogleFun(i)} 
+                                ></i>
+                            </div>
+                            {
+                                currIndex === i && 
+                                <div className='m-5'>
+                                    {
+                                        itemCards.map(({card : {info}}) => (
+                                            <h1>{info.name}</h1>
+                                        ))
+                                    }
+                                </div>
+                            }
+                        </div>
                     ))
                 }
             </div>
