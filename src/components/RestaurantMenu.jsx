@@ -12,7 +12,7 @@ function RestaurantMenu() {
     const [menuData, setMenuData] = useState([])
     const [discountData, setDiscountData] = useState([])
     const [value, setValue] = useState(0);
-    const [currIndex, setCurrIndex] = useState(null);
+    // const [currIndex, setCurrIndex] = useState(false);
 
     function handleNext() {
         
@@ -38,9 +38,9 @@ function RestaurantMenu() {
         fetchMenu()
     }, [])
 
-    function toogleFun(i) {
-        setCurrIndex( i === currIndex ? null : i )
-    }
+    // function toggleFun(i) {
+    //     setCurrIndex(!currIndex);
+    // }
 
   return (
     <div className='w-full'>
@@ -97,25 +97,8 @@ function RestaurantMenu() {
             </div>
             <div>
                 {
-                    menuData.map(({card : {card : {itemCards, title}}}, i) => (
-                        <div>
-                            <div className='flex justify-between'>
-                                <h1>{title} ({itemCards.length})</h1>
-                                <i class="fi text-2xl fi-rs-angle-small-up"
-                                 onClick={() => toogleFun(i)} 
-                                ></i>
-                            </div>
-                            {
-                                currIndex === i && 
-                                <div className='m-5'>
-                                    {
-                                        itemCards.map(({card : {info}}) => (
-                                            <h1>{info.name}</h1>
-                                        ))
-                                    }
-                                </div>
-                            }
-                        </div>
+                    menuData.map(({card : {card : {itemCards, title}}}) => (
+                            <MenuCard title={title} itemCards={itemCards}/>
                     ))
                 }
             </div>
@@ -124,6 +107,41 @@ function RestaurantMenu() {
     </div>
   )
 }
+
+
+function MenuCard({title, itemCards}) {
+
+    const [isOpen, setIsOpen] = useState(true);
+
+    function toggleDropDown() {
+        setIsOpen((prev) => !prev)
+    }
+
+    return(
+        <div className='mt-7'>
+            <div className='flex justify-between'>
+                <h1>{title} ({itemCards.length})</h1>
+                <i className="fi fi-rr-angle-small-up text-xl" onClick={toggleDropDown}></i>
+            </div>
+            { 
+                isOpen && <DetailMenu itemCards={itemCards}/>
+            }
+        </div>
+    )
+}
+
+function DetailMenu({itemCards}) {
+    return(
+        <div className='m-5'>
+            {
+                itemCards.map(({card : {info : {name}}}) => (
+                    <h1>{name}</h1>
+                ))
+            }
+        </div>
+    )
+}
+
 
 function Discount({data : {info : {header, offerLogo, couponCode}}}) {
     // console.log(info)
