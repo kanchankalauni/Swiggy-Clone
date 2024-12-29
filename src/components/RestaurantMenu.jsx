@@ -133,7 +133,7 @@ function MenuCard({card}) {
             <div className='mt-7'>
                 <div className='flex justify-between'>
                     <h1>{title} ({itemCards.length})</h1>
-                    <i className="fi fi-rr-angle-small-up text-xl" onClick={toggleDropDown}></i>
+                    <i className={"fi text-xl fi-rr-angle-small-" + (isOpen ? "up" : "down")} onClick={toggleDropDown}></i>
                 </div>
                 { 
                     isOpen && <DetailMenu itemCards={itemCards}/>
