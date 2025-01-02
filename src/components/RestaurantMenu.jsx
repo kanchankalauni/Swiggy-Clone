@@ -14,6 +14,7 @@ function RestaurantMenu() {
     const [resInfo, setResInfo] = useState([])
     const [menuData, setMenuData] = useState([])
     const [discountData, setDiscountData] = useState([])
+    const [topPicksData, setTopPicksData] = useState(null)
     const [value, setValue] = useState(0);
     // const [currIndex, setCurrIndex] = useState(false);
 
@@ -34,7 +35,7 @@ function RestaurantMenu() {
         setResInfo(res?.data?.cards[2]?.card?.card?.info)
         setDiscountData(res?.data?.cards[3]?.card?.card?.gridElements?.infoWithStyle?.offers)
         let actualMenu = (res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards).filter((data) => data?.card?.card?.itemCards || data?.card?.card?.categories)
-        console.log(actualMenu)
+        setTopPicksData((res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards).filter(data => data.card.card.title == "Top Picks")[0])
         setMenuData(actualMenu)
     }
 
@@ -99,6 +100,37 @@ function RestaurantMenu() {
                 <div className='w-full p-3 rounded-xl font-semibold bg-gray-100 text-center text-gray-600'>Search for dishes</div>
                 <i className={"fi fi-rr-search absolute top-3 right-4"}></i>
             </div>
+
+            {
+               topPicksData && <div className='w-full overflow-hidden'>
+                    <div className='flex justify-between mt-8'>
+                        <h1 className='font-bold text-xl'>{topPicksData.card.card.title}</h1>
+                        <div className='flex gap-4'>
+                            <div onClick={handlePrev} className={`cursor-pointer rounded-full w-9 h-9 flex justify-center items-center ` + (value <= 0 ? "bg-gray-100" : "bg-gray-200")}>
+                                <i className={`text-xl mt-1 fi fi-rr-arrow-left ` + (value <= 0 ? "text-gray-300" : "text-gray-800")}></i>
+                            </div>
+                            <div onClick={handleNext} className={`cursor-pointer rounded-full w-9 h-9 flex justify-center items-center ` + (value >= 180 ? "bg-gray-100" : "bg-gray-200")}>
+                                <i className={`text-xl mt-1 fi fi-rr-arrow-right ` + (value >= 180 ? "text-gray-300" : "text-gray-800")}></i>
+                            </div>
+                        </div>
+                    </div>
+                    <div className='flex gap-4 mt-5'>
+                        {
+                            topPicksData.card.card.carousel.map(({creativeId, dish : {info : {defaultPrice, price}}}) => (
+                                <div className='min-w-[400px] h-[405px] relative'>
+                                    <img className='w-full h-full' src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_292,h_300/` + creativeId} alt=""/>
+                                    <div className='absolute bottom-4 text-white flex justify-between w-full px-5'>
+                                        <p>₹{defaultPrice/100 || price/100}</p>
+                                        <button className='px-10 py-2 font-bold text-green-400 bg-white rounded-xl'>Add</button>
+                                    </div>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </div> 
+            }
+            
+
             <div>
                 {
                     menuData.map(({card : {card}}) => (
@@ -166,39 +198,41 @@ function DetailMenu({itemCards}) {
     return(
         <div className='my-5'>
             {
-                itemCards.map(({card : {info : {name, defaultPrice, price, itemAttribute : {vegClassifier}, ratings : {aggregatedRating : {rating, ratingCountV2}}, description = "", imageId}}}) => {
-                    const [isMore, setIsMore] = useState(false)
-                    let trimDes = description.substring(0, 140) + "..."
-                    return (
-                    <>
-                        <div className='flex w-full justify-between min-h-[182px]'>
-                            <div className='w-[70%]'>
-                                <img className='w-5 rounded-sm' src={vegClassifier === "VEG" ? veg : nonVeg} alt=""/>
-                                <h1 className='font-semibold text-lg'>{name}</h1>
-                                <p className='font-semibold text-lg'>₹{defaultPrice / 100 || price / 100}</p>
-                                <div className='flex items-center gap-1'>
-                                    <i className={"fi mt-1 text-xl fi-ss-star"}></i>
-                                    { rating && <span>{rating} ({ratingCountV2})</span>}
-                                </div>
-                                {
-                                    description.length > 140 ? <div>
-                                        <span >{isMore ? description + " " : trimDes}</span>
-                                        <button className='font-bold' onClick={() => setIsMore(!isMore)}>{isMore ? "less" : "more"}</button>
-                                    </div> : <span >{description}</span>
-                                }
-                            </div>
-                            <div className='w-[20%] relative h-full'>
-                                <img className='rounded-xl aspect-square' src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/" + imageId} alt="" />
-                                <button className='bg-white absolute bottom-[-20px] left-5 text-lg text-green-700 font-bold rounded-xl border px-10 py-2 drop-shadow'>Add</button>
-                            </div>
-                        </div>
-                        <hr className='my-5'/>
-                    </>
-                )})
+                itemCards.map(({card : {info}}) => (<DetailMenuCard info={info}/>))
             }
         </div>
     )
 }
+
+function DetailMenuCard({info : {name, defaultPrice, price, itemAttribute : {vegClassifier}, ratings : {aggregatedRating : {rating, ratingCountV2}}, description = "", imageId}}) {
+    const [isMore, setIsMore] = useState(false)
+    let trimDes = description.substring(0, 140) + "..."
+    return (
+    <>
+        <div className='flex w-full justify-between min-h-[182px]'>
+            <div className='w-[70%]'>
+                <img className='w-5 rounded-sm' src={vegClassifier === "VEG" ? veg : nonVeg} alt=""/>
+                <h1 className='font-semibold text-lg'>{name}</h1>
+                <p className='font-semibold text-lg'>₹{defaultPrice / 100 || price / 100}</p>
+                <div className='flex items-center gap-1'>
+                    <i className={"fi mt-1 text-xl fi-ss-star"}></i>
+                    { rating && <span>{rating} ({ratingCountV2})</span>}
+                </div>
+                {
+                    description.length > 140 ? <div>
+                        <span >{isMore ? description + " " : trimDes}</span>
+                        <button className='font-bold' onClick={() => setIsMore(!isMore)}>{isMore ? "less" : "more"}</button>
+                    </div> : <span >{description}</span>
+                }
+            </div>
+            <div className='w-[20%] relative h-full'>
+                <img className='rounded-xl aspect-square' src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/" + imageId} alt="" />
+                <button className='bg-white absolute bottom-[-20px] left-5 text-lg text-green-700 font-bold rounded-xl border px-10 py-2 drop-shadow'>Add</button>
+            </div>
+        </div>
+        <hr className='my-5'/>
+    </>
+)}
 
 
 function Discount({data : {info : {header, offerLogo, couponCode}}}) {
