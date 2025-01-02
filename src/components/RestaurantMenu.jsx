@@ -166,7 +166,10 @@ function DetailMenu({itemCards}) {
     return(
         <div className='my-5'>
             {
-                itemCards.map(({card : {info : {name, defaultPrice, price, itemAttribute : {vegClassifier}, ratings : {aggregatedRating : {rating, ratingCountV2}}, description, imageId}}}) => (
+                itemCards.map(({card : {info : {name, defaultPrice, price, itemAttribute : {vegClassifier}, ratings : {aggregatedRating : {rating, ratingCountV2}}, description = "", imageId}}}) => {
+                    const [isMore, setIsMore] = useState(false)
+                    let trimDes = description.substring(0, 140) + "..."
+                    return (
                     <>
                         <div className='flex w-full justify-between min-h-[182px]'>
                             <div className='w-[70%]'>
@@ -175,9 +178,14 @@ function DetailMenu({itemCards}) {
                                 <p className='font-semibold text-lg'>₹{defaultPrice / 100 || price / 100}</p>
                                 <div className='flex items-center gap-1'>
                                     <i className={"fi mt-1 text-xl fi-ss-star"}></i>
-                                    <span>{rating} ({ratingCountV2})</span>
+                                    { rating && <span>{rating} ({ratingCountV2})</span>}
                                 </div>
-                                <p className='line-clamp-2'>{description}</p>
+                                {
+                                    description.length > 140 ? <div>
+                                        <span >{isMore ? description + " " : trimDes}</span>
+                                        <button className='font-bold' onClick={() => setIsMore(!isMore)}>{isMore ? "less" : "more"}</button>
+                                    </div> : <span >{description}</span>
+                                }
                             </div>
                             <div className='w-[20%] relative h-full'>
                                 <img className='rounded-xl aspect-square' src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/" + imageId} alt="" />
@@ -186,7 +194,7 @@ function DetailMenu({itemCards}) {
                         </div>
                         <hr className='my-5'/>
                     </>
-                ))
+                )})
             }
         </div>
     )
