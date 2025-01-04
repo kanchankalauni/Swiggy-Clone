@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 
 function Head() {
@@ -30,15 +30,32 @@ function Head() {
         }
     ]
 
+    const [visible, setVisible] = useState(false)
+
+    function handleSearchFunctionality() {
+        setVisible(prev => !prev)
+    }
+
+    function handleVisibility() {
+        setVisible(prev => !prev)
+    }
+
   return (
-    <>
+    <div className='relative'>
+        
+        {
+            visible && <div className='w-full bg-black/50 h-full absolute z-50'>
+                <p className='text-black bg-white p-10 w-5 text-center' onClick={handleVisibility}>cut</p>
+            </div>
+        }
+
         <div className='w-full shadow-md h-20 flex justify-center items-center'>
             <div className='flex justify-around w-[80%]'>
                 <div className='flex items-center'>
                     <Link to={"/"}>
                         <img className='w-24' src="https://1000logos.net/wp-content/uploads/2021/05/Swiggy-emblem.png" alt="Swiggy Logo" />
                     </Link>
-                    <div className='flex items-center gap-2'>
+                    <div className='flex items-center gap-2' onClick={handleSearchFunctionality}>
                         <p className='font-bold border-b-2 border-black'>Other</p>
                         <i className="text-2xl text-orange-500 fi fi-rs-angle-small-down"></i>
                     </div>
@@ -57,7 +74,7 @@ function Head() {
         </div>
 
         <Outlet/>
-    </>
+    </div>
   )
 }
 
