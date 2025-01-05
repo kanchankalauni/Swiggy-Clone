@@ -30,32 +30,30 @@ function Head() {
         }
     ]
 
-    const [visible, setVisible] = useState(false)
+    const [visible, setVisible] = useState(true)
 
-    function handleSearchFunctionality() {
-        setVisible(prev => !prev)
-    }
 
     function handleVisibility() {
         setVisible(prev => !prev)
     }
 
   return (
-    <div className='relative'>
+    <div className='relative w-full'>
         
-        {
-            visible && <div className='w-full bg-black/50 h-full absolute z-50'>
-                <p className='text-black bg-white p-10 w-5 text-center' onClick={handleVisibility}>cut</p>
+        <div>
+            <div onClick={handleVisibility} className={'w-full bg-black/50 h-full absolute z-30 ' + (visible ? "visible" : " invisible")}></div>
+            <div className={'bg-white w-[40%] h-full z-40 absolute duration-500 ' + (visible ? "left-0" : "-left-[100%]")}>
+                <p className='bg-black text-white p-5 w-[10%]' onClick={handleVisibility}>cut</p>
             </div>
-        }
+        </div>
 
-        <div className='w-full shadow-md h-20 flex justify-center items-center'>
+        <div className='w-full sticky bg-white z-20 top-0 shadow-md h-20 flex justify-center items-center'>
             <div className='flex justify-around w-[80%]'>
                 <div className='flex items-center'>
                     <Link to={"/"}>
                         <img className='w-24' src="https://1000logos.net/wp-content/uploads/2021/05/Swiggy-emblem.png" alt="Swiggy Logo" />
                     </Link>
-                    <div className='flex items-center gap-2' onClick={handleSearchFunctionality}>
+                    <div className='flex items-center gap-2' onClick={handleVisibility}>
                         <p className='font-bold border-b-2 border-black'>Other</p>
                         <i className="text-2xl text-orange-500 fi fi-rs-angle-small-down"></i>
                     </div>
