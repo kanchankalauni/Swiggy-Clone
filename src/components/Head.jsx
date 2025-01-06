@@ -1,5 +1,6 @@
-import React, { useState } from 'react'
+import React, { useContext, useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
+import { Visibility } from '../context/contextApi'
 
 function Head() {
 
@@ -30,8 +31,8 @@ function Head() {
         }
     ]
 
-    const [visible, setVisible] = useState(true)
-
+    const {visible, setVisible} = useContext(Visibility)
+    
 
     function handleVisibility() {
         setVisible(prev => !prev)
@@ -44,6 +45,7 @@ function Head() {
             <div onClick={handleVisibility} className={'w-full bg-black/50 h-full absolute z-30 ' + (visible ? "visible" : " invisible")}></div>
             <div className={'bg-white w-[40%] h-full z-40 absolute duration-500 ' + (visible ? "left-0" : "-left-[100%]")}>
                 <p className='bg-black text-white p-5 w-[10%]' onClick={handleVisibility}>cut</p>
+                <input type="text" className='border p-5 focus:outline-none focus:shadow-lg'/>
             </div>
         </div>
 
