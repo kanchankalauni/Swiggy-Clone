@@ -33,9 +33,17 @@ function Head() {
 
     const {visible, setVisible} = useContext(Visibility)
     
+    const [searchResult, setSearchResult] = useState([])
 
     function handleVisibility() {
         setVisible(prev => !prev)
+    }
+
+    async function searchResultFun(val) {
+        console.log(val)
+        const res = await fetch("https://www.swiggy.com/dapi/misc/place-autocomplete?input=mumbai");
+        const data = await res.json();
+        setSearchResult(data.data)
     }
 
   return (
@@ -43,9 +51,18 @@ function Head() {
         
         <div>
             <div onClick={handleVisibility} className={'w-full bg-black/50 h-full absolute z-30 ' + (visible ? "visible" : " invisible")}></div>
-            <div className={'bg-white w-[40%] h-full z-40 absolute duration-500 ' + (visible ? "left-0" : "-left-[100%]")}>
+            <div className={'bg-white w-[40%] h-full p-5 z-40 absolute duration-500 ' + (visible ? "left-0" : "-left-[100%]")}>
                 <p className='bg-black text-white p-5 w-[10%]' onClick={handleVisibility}>cut</p>
-                <input type="text" className='border p-5 focus:outline-none focus:shadow-lg'/>
+                <input type="text" className='border p-5 focus:outline-none focus:shadow-lg' onChange={(e) => searchResultFun(e.target.value)}/>
+                <div>
+                    <ul>
+                        {
+                            searchResult.map((data) => (
+                                <li>{data.structured_formatting.main_text} <p className='text-sm opacity-65'>{data.structured_formatting.secondary_text}</p></li>
+                            ))
+                        }
+                    </ul>
+                </div>
             </div>
         </div>
 
