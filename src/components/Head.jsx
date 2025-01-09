@@ -41,7 +41,7 @@ function Head() {
 
     async function searchResultFun(val) {
         console.log(val)
-        const res = await fetch("https://www.swiggy.com/dapi/misc/place-autocomplete?input=mumbai");
+        const res = await fetch(`https://www.swiggy.com/dapi/misc/place-autocomplete?input=${val}`);
         const data = await res.json();
         setSearchResult(data.data)
     }
