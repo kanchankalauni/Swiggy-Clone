@@ -8,10 +8,10 @@ function Body() {
 
     const [topRestaurantData, setTopRestaurantData] = useState([])
     const [onYourMindData, setOnYourMindData] = useState([])
-    const {coord} = useContext(Coordinates)
+    const {coord : {lat, lng}} = useContext(Coordinates)
 
     async function fetchData() {
-        const data = await fetch("https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=28.5355161&lng=77.3910265&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+        const data = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`)
         const result = await data.json()
         // console.log(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
         setOnYourMindData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info)
