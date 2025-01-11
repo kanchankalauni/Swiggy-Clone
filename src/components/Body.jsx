@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import OnYourMind from './onYourMind';
 import TopRestaurant from './TopRestaurant';
 import OnlineFoodDelivery from './OnlineFoodDelivery';
+import { Coordinates } from '../context/contextApi';
 
 function Body() {
 
     const [topRestaurantData, setTopRestaurantData] = useState([])
     const [onYourMindData, setOnYourMindData] = useState([])
+    const {coord} = useContext(Coordinates)
 
     async function fetchData() {
         const data = await fetch("https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=28.5355161&lng=77.3910265&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")

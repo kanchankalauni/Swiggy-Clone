@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
-import { Visibility } from '../context/contextApi'
+import { Coordinates, Visibility } from '../context/contextApi'
 
 function Head() {
 
@@ -35,6 +35,8 @@ function Head() {
     
     const [searchResult, setSearchResult] = useState([])
 
+    const {setCoord} = useContext(Coordinates)
+
     function handleVisibility() {
         setVisible(prev => !prev)
     }
@@ -44,6 +46,17 @@ function Head() {
         const res = await fetch(`https://www.swiggy.com/dapi/misc/place-autocomplete?input=${val}`);
         const data = await res.json();
         setSearchResult(data.data)
+    }
+
+    async function fetchLatAndLng(id) {
+        if(id == "") return
+        console.log(id)
+        const res = await fetch(`https://www.swiggy.com/dapi/misc/address-recommend?place_id=${id}`);
+        const data = await res.json();
+        setCoord({
+            lat : data.data[0].geometry.location.lat,
+            lng : data.data[0].geometry.location.lng
+        })
     }
 
   return (
@@ -58,7 +71,12 @@ function Head() {
                     <ul>
                         {
                             searchResult.map((data) => (
-                                <li>{data.structured_formatting.main_text} <p className='text-sm opacity-65'>{data.structured_formatting.secondary_text}</p></li>
+                                <li onClick={() => fetchLatAndLng(data.place_id)}>
+                                    {data.structured_formatting.main_text} 
+                                    <p className='text-sm opacity-65'>
+                                        {data.structured_formatting.secondary_text}
+                                    </p>
+                                </li>
                             ))
                         }
                     </ul>
