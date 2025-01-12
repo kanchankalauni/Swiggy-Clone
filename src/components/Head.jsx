@@ -34,6 +34,7 @@ function Head() {
     const {visible, setVisible} = useContext(Visibility)
     
     const [searchResult, setSearchResult] = useState([])
+    const [address, setAddress] = useState([""])
 
     const {setCoord} = useContext(Coordinates)
 
@@ -57,6 +58,7 @@ function Head() {
             lat : data.data[0].geometry.location.lat,
             lng : data.data[0].geometry.location.lng
         })
+        setAddress(data.data[0].formatted_address);
     }
 
   return (
@@ -91,7 +93,10 @@ function Head() {
                         <img className='w-24' src="https://1000logos.net/wp-content/uploads/2021/05/Swiggy-emblem.png" alt="Swiggy Logo" />
                     </Link>
                     <div className='flex items-center gap-2' onClick={handleVisibility}>
-                        <p className='font-bold border-b-2 border-black'>Other</p>
+                        <p>
+                            <span className='font-bold border-b-2 border-black'>Other</span> 
+                            <span className='ml-2 text-sm opacity-85'>{address}</span> 
+                        </p>
                         <i className="text-2xl text-orange-500 fi fi-rs-angle-small-down"></i>
                     </div>
                 </div>

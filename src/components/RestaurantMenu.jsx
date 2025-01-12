@@ -1,5 +1,6 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { Coordinates } from '../context/contextApi'
 
 let veg = "https://i.pinimg.com/originals/e4/1f/f3/e41ff3b10a26b097602560180fb91a62.png"
 let nonVeg = "https://www.pngkey.com/png/full/245-2459071_non-veg-icon-non-veg-symbol-png.png"
@@ -16,6 +17,7 @@ function RestaurantMenu() {
     const [discountData, setDiscountData] = useState([])
     const [topPicksData, setTopPicksData] = useState(null)
     const [value, setValue] = useState(0);
+    const {coord : {lat, lng}} = useContext(Coordinates)
     // const [currIndex, setCurrIndex] = useState(false);
 
     function handleNext() {
@@ -29,7 +31,7 @@ function RestaurantMenu() {
     // console.log(menuData)
 
     async function fetchMenu() {
-        let data = await fetch(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=28.5355161&lng=77.3910265&restaurantId=${mainId}&catalog_qa=undefined&submitAction=ENTER`)
+        let data = await fetch(`https://www.swiggy.com/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${mainId}&catalog_qa=undefined&submitAction=ENTER`)
         let res = await data.json()
         // console.log(res?.data?.cards[4]?.groupedCard?.cardGroupMap?.REGULAR?.cards[1]?.card?.card);
         setResInfo(res?.data?.cards[2]?.card?.card?.info)
