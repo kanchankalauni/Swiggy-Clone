@@ -7,6 +7,8 @@ import { Coordinates } from '../context/contextApi';
 function Body() {
 
     const [topRestaurantData, setTopRestaurantData] = useState([])
+    const [topResTitle, setTopResTitle] = useState("")
+    const [onlineTitle, setOnlineTitle] = useState("")
     const [onYourMindData, setOnYourMindData] = useState([])
     const {coord : {lat, lng}} = useContext(Coordinates)
     
@@ -14,7 +16,8 @@ function Body() {
     async function fetchData() {
         const data = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`)
         const result = await data.json()
-        // console.log(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+        setTopResTitle(result?.data?.cards[1]?.card?.card?.header?.title)
+        setOnlineTitle(result?.data?.cards[2]?.card?.card?.title)
         setOnYourMindData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info)
         setTopRestaurantData(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     }
@@ -27,8 +30,8 @@ function Body() {
     <div className='w-full'>
         <div className='w-[75%] mx-auto mt-1 overflow-hidden'>
             <OnYourMind data={onYourMindData}/>
-            <TopRestaurant data={topRestaurantData}/>
-            <OnlineFoodDelivery data={topRestaurantData}/>
+            <TopRestaurant data={topRestaurantData} title={topResTitle}/>
+            <OnlineFoodDelivery data={topRestaurantData} title={onlineTitle}/>
         </div>
     </div>
   )

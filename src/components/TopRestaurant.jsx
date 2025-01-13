@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import RestaurantCard from './RestaurantCard';
 
-function TopRestaurant({data}) {
+function TopRestaurant({data = [], title}) {
     // console.log(data)
     // const [data, setData] = useState([])
 
@@ -29,7 +29,7 @@ function TopRestaurant({data}) {
   return (
     <div className='mt-10'>
         <div className='flex justify-between mt-5'>
-            <h1 className='font-bold text-2xl'>Top restaurant chains in Delhi</h1>
+            <h1 className='font-bold text-2xl'>{title}</h1>
             <div className='flex gap-4'>
                 <div onClick={handlePrev} className={`cursor-pointer rounded-full w-9 h-9 flex justify-center items-center ` + (value <= 0 ? "bg-gray-100" : "bg-gray-200")}>
                     <i className={`text-xl mt-1 fi fi-rr-arrow-left ` + (value <= 0 ? "text-gray-300" : "text-gray-800")}></i>
