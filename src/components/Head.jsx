@@ -93,9 +93,9 @@ function Head() {
                         <img className='w-24' src="https://1000logos.net/wp-content/uploads/2021/05/Swiggy-emblem.png" alt="Swiggy Logo" />
                     </Link>
                     <div className='flex items-center gap-2' onClick={handleVisibility}>
-                        <p>
+                        <p className='flex items-center'>
                             <span className='font-bold border-b-2 border-black'>Other</span> 
-                            <span className='ml-2 text-sm opacity-85'>{address}</span> 
+                            <span className='ml-2 w-[250px] text-sm opacity-85 line-clamp-1'>{address}</span> 
                         </p>
                         <i className="text-2xl text-orange-500 fi fi-rs-angle-small-down"></i>
                     </div>
