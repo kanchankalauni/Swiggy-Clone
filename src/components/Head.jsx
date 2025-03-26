@@ -44,7 +44,7 @@ function Head() {
 
     async function searchResultFun(val) {
         if(val == "") return
-        const res = await fetch(`https://www.swiggy.com/dapi/misc/place-autocomplete?input=${val}`);
+        const res = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/misc/place-autocomplete?input=${val}`);
         const data = await res.json();
         setSearchResult(data.data)
     }
@@ -52,7 +52,7 @@ function Head() {
     async function fetchLatAndLng(id) {
         if(id == "") return
         console.log(id)
-        const res = await fetch(`https://www.swiggy.com/dapi/misc/address-recommend?place_id=${id}`);
+        const res = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/misc/address-recommend?place_id=${id}`);
         const data = await res.json();
         setCoord({
             lat : data.data[0].geometry.location.lat,
@@ -87,15 +87,15 @@ function Head() {
         </div>
 
         <div className='w-full sticky bg-white z-20 top-0 shadow-md h-20 flex justify-center items-center'>
-            <div className='flex justify-around w-[80%]'>
-                <div className='flex items-center'>
+            <div className='flex justify-around w-[80%] gap-5'>
+                <div className='flex items-center '>
                     <Link to={"/"}>
                         <img className='w-24' src="https://1000logos.net/wp-content/uploads/2021/05/Swiggy-emblem.png" alt="Swiggy Logo" />
                     </Link>
-                    <div className='flex items-center gap-2' onClick={handleVisibility}>
+                    <div className='flex items-center ' onClick={handleVisibility}>
                         <p className='flex items-center'>
                             <span className='font-bold border-b-2 border-black'>Other</span> 
-                            <span className='ml-2 w-[250px] text-sm opacity-85 line-clamp-1'>{address}</span> 
+                            <span className='ml-2 w-[150px] text-sm opacity-85 line-clamp-1'>{address}</span> 
                         </p>
                         <i className="text-2xl text-orange-500 fi fi-rs-angle-small-down"></i>
                     </div>
