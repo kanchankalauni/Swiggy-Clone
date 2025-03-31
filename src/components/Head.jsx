@@ -51,13 +51,15 @@ function Head() {
 
     async function fetchLatAndLng(id) {
         if(id == "") return
-        console.log(id)
+        // console.log(id)
+        handleVisibility();
         const res = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/misc/address-recommend?place_id=${id}`);
         const data = await res.json();
         setCoord({
             lat : data.data[0].geometry.location.lat,
             lng : data.data[0].geometry.location.lng
         })
+        console.log(data)
         setAddress(data.data[0].formatted_address);
     }
 
@@ -67,7 +69,7 @@ function Head() {
         <div>
             <div onClick={handleVisibility} className={'w-full bg-black/50 h-full absolute z-30 ' + (visible ? "visible" : " invisible")}></div>
             <div className={'bg-white w-[40%] h-full p-5 z-40 absolute duration-500 ' + (visible ? "left-0" : "-left-[100%]")}>
-                <p className='bg-black text-white p-5 w-[10%]' onClick={handleVisibility}>cut</p>
+                <i className='fi fi-br-cross' onClick={handleVisibility}></i>
                 <input type="text" className='border p-5 focus:outline-none focus:shadow-lg' onChange={(e) => searchResultFun(e.target.value)}/>
                 <div>
                     <ul>
