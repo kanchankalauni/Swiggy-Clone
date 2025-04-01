@@ -1,6 +1,6 @@
 import React, { useContext, useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
-import { Coordinates, Visibility } from '../context/contextApi'
+import { CartContext, Coordinates, Visibility } from '../context/contextApi'
 
 function Head() {
 
@@ -32,6 +32,7 @@ function Head() {
     ]
 
     const {visible, setVisible} = useContext(Visibility)
+    const {cartData, setCartData} = useContext(CartContext)
     
     const [searchResult, setSearchResult] = useState([])
     const [address, setAddress] = useState([""])
@@ -118,6 +119,7 @@ function Head() {
                             <div className='flex items-center gap-3'>
                                 <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
                                 <p className='text-lg font-medium text-gray-700'>{data.name}</p>
+                                { data.name === "Cart" && !cartData.length == 0 && <p>{cartData.length}</p>}
                             </div>
                         ))
                     }

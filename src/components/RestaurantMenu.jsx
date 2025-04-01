@@ -207,6 +207,11 @@ function DetailMenu({itemCards}) {
 }
 
 function DetailMenuCard({info : {name, defaultPrice, price, itemAttribute : {vegClassifier}, ratings : {aggregatedRating : {rating, ratingCountV2}}, description = "", imageId}}) {
+    
+    function handleAddToCart() {
+        console.log("add to cart")
+    }
+
     const [isMore, setIsMore] = useState(false)
     let trimDes = description.substring(0, 140) + "..."
     return (
@@ -229,7 +234,7 @@ function DetailMenuCard({info : {name, defaultPrice, price, itemAttribute : {veg
             </div>
             <div className='w-[20%] relative h-full'>
                 <img className='rounded-xl aspect-square' src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/" + imageId} alt="" />
-                <button className='bg-white absolute bottom-[-20px] left-5 text-lg text-green-700 font-bold rounded-xl border px-10 py-2 drop-shadow'>Add</button>
+                <button onClick={handleAddToCart} className='bg-white absolute bottom-[-20px] left-5 text-lg text-green-700 font-bold rounded-xl border px-10 py-2 drop-shadow'>Add</button>
             </div>
         </div>
         <hr className='my-5'/>
