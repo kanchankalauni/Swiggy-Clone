@@ -68,22 +68,32 @@ function Head() {
         
         <div>
             <div onClick={handleVisibility} className={'w-full bg-black/50 h-full absolute z-30 ' + (visible ? "visible" : " invisible")}></div>
-            <div className={'bg-white w-[40%] h-full p-5 z-40 absolute duration-500 ' + (visible ? "left-0" : "-left-[100%]")}>
-                <i className='fi fi-br-cross' onClick={handleVisibility}></i>
-                <input type="text" className='border p-5 focus:outline-none focus:shadow-lg' onChange={(e) => searchResultFun(e.target.value)}/>
-                <div>
-                    <ul>
-                        {
-                            searchResult.map((data) => (
-                                <li onClick={() => fetchLatAndLng(data.place_id)}>
-                                    {data.structured_formatting.main_text} 
-                                    <p className='text-sm opacity-65'>
-                                        {data.structured_formatting.secondary_text}
-                                    </p>
-                                </li>
-                            ))
-                        }
-                    </ul>
+            <div className={'bg-white flex justify-end w-[40%] h-full p-5 z-40 absolute duration-500 ' + (visible ? "left-0" : "-left-[100%]")}>
+                <div className='flex flex-col w-[50%] mr-6 mt-3 gap-4'>
+                    <i className='fi fi-br-cross' onClick={handleVisibility}></i>
+                    <input type="text" className='border p-5 focus:outline-none focus:shadow-lg' onChange={(e) => searchResultFun(e.target.value)}/>
+                    <div className='border p-5'>
+                        <ul>
+                            {
+                                searchResult.map((data, index) => {
+                                    const isLast = (index === searchResult.length - 1)
+                                    return(
+                                    <div className='my-5'>
+                                        <div className='flex gap-4'>
+                                            <i className="fi mt-1 fi-rr-marker"></i>
+                                            <li onClick={() => fetchLatAndLng(data.place_id)}>
+                                                {data.structured_formatting.main_text} 
+                                                <p className='text-sm opacity-65'>
+                                                    {data.structured_formatting.secondary_text}
+                                                </p>
+                                                { !isLast && <p className='opacity-35'>------------------------</p>}
+                                            </li>
+                                        </div>
+                                    </div>
+                                )})
+                            }
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
