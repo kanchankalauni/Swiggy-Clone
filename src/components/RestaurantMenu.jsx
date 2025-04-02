@@ -209,7 +209,7 @@ function DetailMenu({itemCards}) {
 function DetailMenuCard({info : {name, defaultPrice, price, itemAttribute : {vegClassifier}, ratings : {aggregatedRating : {rating, ratingCountV2}}, description = "", imageId}}) {
     
     function handleAddToCart() {
-        console.log("add to cart")
+        console.log("Add to Cart")
     }
 
     const [isMore, setIsMore] = useState(false)
