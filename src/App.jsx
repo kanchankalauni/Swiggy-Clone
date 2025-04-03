@@ -4,6 +4,7 @@ import Head from "./components/Head"
 import RestaurantMenu from "./components/RestaurantMenu"
 import { CartContext, Coordinates, Visibility } from "./context/contextApi"
 import { useState } from "react"
+import Cart from "./components/Cart"
 
 function App() {
 
@@ -20,6 +21,8 @@ function App() {
                         <Route path="/" element={<Head/>}>
                             <Route path="/" element={<Body/>}/>
                             <Route path="/restaurantMenu/:id" element={<RestaurantMenu/>}/>
+                            <Route path="/cart" element={<Cart/>}/>
+                            <Route path="/*" element={<h1>Coming soon.....</h1>}/>
                         </Route>
                     </Routes>
                 </div>

@@ -1,6 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
-import { Coordinates } from '../context/contextApi'
+import {  CartContext, Coordinates } from '../context/contextApi'
 
 let veg = "https://i.pinimg.com/originals/e4/1f/f3/e41ff3b10a26b097602560180fb91a62.png"
 let nonVeg = "https://www.pngkey.com/png/full/245-2459071_non-veg-icon-non-veg-symbol-png.png"
@@ -206,10 +206,15 @@ function DetailMenu({itemCards}) {
     )
 }
 
-function DetailMenuCard({info : {name, defaultPrice, price, itemAttribute : {vegClassifier}, ratings : {aggregatedRating : {rating, ratingCountV2}}, description = "", imageId}}) {
+function DetailMenuCard({info}) {
     
+    const {name, defaultPrice, price, itemAttribute : {vegClassifier}, ratings : {aggregatedRating : {rating, ratingCountV2}}, description = "", imageId} = info;
+
+    const {cartData, setCartData} = useContext(CartContext)
+
     function handleAddToCart() {
-        console.log("Add to Cart")
+        setCartData((prev) => [...prev, info])
+        // console.log(info)
     }
 
     const [isMore, setIsMore] = useState(false)

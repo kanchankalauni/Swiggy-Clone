@@ -7,27 +7,33 @@ function Head() {
     const navItems = [
         {
             name : "Swiggy Corporate",
-            image : "fi-ss-briefcase"
+            image : "fi-ss-briefcase",
+            path: "/corporate"
         },
         {
             name : "Search",
-            image : "fi-rr-search"
+            image : "fi-rr-search",
+            path: "/search"
         },
         {
             name : "Offers",
-            image : "fi-rr-badge-percent"
+            image : "fi-rr-badge-percent",
+            path: "/offers"
         },
         {
             name : "Help",
-            image : "fi-rr-exclamation"
+            image : "fi-rr-exclamation",
+            path: "/help"
         },
         {
             name : "Sign in",
-            image : "fi-bs-user"
+            image : "fi-bs-user",
+            path: "/signin"
         },
         {
             name : "Cart",
-            image : "fi-rr-shopping-cart"
+            image : "fi-rr-shopping-cart",
+            path: "/cart"
         }
     ]
 
@@ -116,11 +122,13 @@ function Head() {
                 <div className='flex items-center gap-14'>
                     {
                         navItems.map((data) => (
-                            <div className='flex items-center gap-3'>
-                                <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
-                                <p className='text-lg font-medium text-gray-700'>{data.name}</p>
-                                { data.name === "Cart" && !cartData.length == 0 && <p>{cartData.length}</p>}
-                            </div>
+                            <Link to={data.path}>
+                                <div className='flex items-center gap-3'>
+                                    <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
+                                    <p className='text-lg font-medium text-gray-700'>{data.name}</p>
+                                    { data.name === "Cart" && !cartData.length == 0 && <p>{cartData.length}</p>}
+                                </div>
+                            </Link>
                         ))
                     }
                 </div>
