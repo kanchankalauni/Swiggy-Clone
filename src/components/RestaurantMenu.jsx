@@ -213,7 +213,13 @@ function DetailMenuCard({info}) {
     const {cartData, setCartData} = useContext(CartContext)
 
     function handleAddToCart() {
-        setCartData((prev) => [...prev, info])
+        const isAdded = cartData.find((data) => data.id === info.id)
+        if (!isAdded) {
+                    setCartData((prev) => [...prev, info])
+        }
+        else{
+            alert("already added")
+        }
         // console.log(info)
     }
 
