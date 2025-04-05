@@ -216,11 +216,11 @@ function DetailMenuCard({info}) {
         const isAdded = cartData.find((data) => data.id === info.id)
         if (!isAdded) {
                     setCartData((prev) => [...prev, info])
+                    localStorage.setItem("cartData", JSON.stringify([...cartData, info]))
         }
         else{
             alert("already added")
         }
-        // console.log(info)
     }
 
     const [isMore, setIsMore] = useState(false)
