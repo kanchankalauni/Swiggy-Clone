@@ -136,7 +136,7 @@ function RestaurantMenu() {
             <div>
                 {
                     menuData.map(({card : {card}}) => (
-                            <MenuCard card={card}/>
+                            <MenuCard card={card} resInfo={resInfo}/>
                     ))
                 }
             </div>
@@ -147,7 +147,7 @@ function RestaurantMenu() {
 }
 
 
-function MenuCard({card}) {
+function MenuCard({card, resInfo}) {
 
     let hello = false;
     if (card["@type"]) {
@@ -174,7 +174,7 @@ function MenuCard({card}) {
                         <i className={"fi text-xl fi-rr-angle-small-" + (isOpen ? "up" : "down")} onClick={toggleDropDown}></i>
                     </div>
                     { 
-                        isOpen && <DetailMenu itemCards={itemCards}/>
+                        isOpen && <DetailMenu itemCards={itemCards} resInfo={resInfo}/>
                     }
                 </div>
                 <hr className={'my-5 border-' + (card["@type"]) ? "[10px]" : "[4px]"}/>
@@ -188,7 +188,7 @@ function MenuCard({card}) {
                 <h1 className='font-bold text-xl'>{title}</h1>
                 {
                     categories.map((data) => (
-                        <MenuCard card={data}/>
+                        <MenuCard card={data} resInfo={resInfo}/>
                     ))
                 }
             </div>
@@ -196,27 +196,35 @@ function MenuCard({card}) {
     }
 }
 
-function DetailMenu({itemCards}) {
+function DetailMenu({itemCards, resInfo}) {
     return(
         <div className='my-5'>
             {
-                itemCards.map(({card : {info}}) => (<DetailMenuCard info={info}/>))
+                itemCards.map(({card : {info}}) => (<DetailMenuCard info={info} resInfo={resInfo}/>))
             }
         </div>
     )
 }
 
-function DetailMenuCard({info}) {
+function DetailMenuCard({info, resInfo}) {
     
     const {name, defaultPrice, price, itemAttribute : {vegClassifier}, ratings : {aggregatedRating : {rating, ratingCountV2}}, description = "", imageId} = info;
 
     const {cartData, setCartData} = useContext(CartContext)
 
     function handleAddToCart() {
+        console.log(resInfo.name)
         const isAdded = cartData.find((data) => data.id === info.id)
+        let getResInfoFromLocalStore = JSON.parse(localStorage.getItem("resInfo")) || []
         if (!isAdded) {
-                    setCartData((prev) => [...prev, info])
-                    localStorage.setItem("cartData", JSON.stringify([...cartData, info]))
+            if (getResInfoFromLocalStore.name === resInfo.name || getResInfoFromLocalStore.length === 0) {
+                setCartData((prev) => [...prev, info])
+                localStorage.setItem("cartData", JSON.stringify([...cartData, info]))
+                localStorage.setItem("resInfo", JSON.stringify(resInfo))
+            }
+            else{
+                alert("Different restaurant item")
+            }
         }
         else{
             alert("already added")

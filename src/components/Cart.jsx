@@ -5,10 +5,6 @@ import { Link } from 'react-router-dom'
 function Cart() {
     const { cartData, setCartData } = useContext(CartContext)
     console.log(cartData)
-    // let totalPrice = 0
-    // for (let i = 0; i < cartData.length; i++) {
-    //     totalPrice = totalPrice + (cartData[i].price / 100 || cartData[i].defaultPrice) / 100
-    // }
 
     // let totalPrice = cartData.reduce((acc, curVal) => (acc + (curVal.price / 100 || curVal.defaultPrice / 100)), 0)
     let totalPrice = cartData.reduce((acc, curVal) => {
@@ -18,10 +14,15 @@ function Cart() {
     }, 0);
 
     function handleRemoveFromCart(i) {
-        let newArr = [...cartData]
-        newArr.splice(i, 1)
-        setCartData(newArr)
-        localStorage.setItem("cartData", JSON.stringify(newArr))
+        if (cartData.length > 1) {
+            let newArr = [...cartData]
+            newArr.splice(i, 1)
+            setCartData(newArr)
+            localStorage.setItem("cartData", JSON.stringify(newArr))
+        }
+        else{
+            handleClearCart()
+        }
     }
 
     function handleClearCart() {
