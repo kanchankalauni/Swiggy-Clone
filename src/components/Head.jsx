@@ -1,6 +1,8 @@
 import React, { useContext, useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { CartContext, Coordinates, Visibility } from '../context/contextApi'
+import { useDispatch, useSelector } from 'react-redux'
+import { toogleSearchBar } from '../utils/toogleSlice'
 
 function Head() {
 
@@ -37,16 +39,23 @@ function Head() {
         }
     ]
 
-    const {visible, setVisible} = useContext(Visibility)
-    const {cartData, setCartData} = useContext(CartContext)
-    
+    // const {visible, setVisible} = useContext(Visibility)
+    // const {cartData, setCartData} = useContext(CartContext)
+    const cartData = useSelector((state) => state.cartSlice.cartItems)
+
+    // access data from redux store using useSelector
+    const visible = useSelector((state) => state.toogleSlice.searchBarToogle)
+    const dispatch = useDispatch()
+
     const [searchResult, setSearchResult] = useState([])
     const [address, setAddress] = useState([""])
 
     const {setCoord} = useContext(Coordinates)
 
     function handleVisibility() {
-        setVisible(prev => !prev)
+        // setVisible(prev => !prev)
+
+        dispatch(toogleSearchBar())
     }
 
     async function searchResultFun(val) {

@@ -1,11 +1,16 @@
 import React, { useContext } from 'react'
 import { CartContext } from '../context/contextApi'
 import { Link } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux';
+import { clearCart, deleteItem } from '../utils/cartSlice';
 
 function Cart() {
-    const { cartData, setCartData } = useContext(CartContext)
-    console.log(cartData)
+    // const { cartData, setCartData } = useContext(CartContext)
+    // console.log(cartData)
 
+    const cartData = useSelector((state) => state.cartSlice.cartItems)
+    const dispatch = useDispatch()
+    // console.log(cartData)
     // let totalPrice = cartData.reduce((acc, curVal) => (acc + (curVal.price / 100 || curVal.defaultPrice / 100)), 0)
     let totalPrice = cartData.reduce((acc, curVal) => {
         const price = curVal.price ?? curVal.defaultPrice;
@@ -17,8 +22,8 @@ function Cart() {
         if (cartData.length > 1) {
             let newArr = [...cartData]
             newArr.splice(i, 1)
-            setCartData(newArr)
-            localStorage.setItem("cartData", JSON.stringify(newArr))
+            // setCartData(newArr)
+            dispatch(deleteItem(newArr))
         }
         else{
             handleClearCart()
@@ -26,9 +31,10 @@ function Cart() {
     }
 
     function handleClearCart() {
-        setCartData([])
+        // setCartData([])
         // localStorage.setItem("cartData", JSON.stringify([]))
-        localStorage.clear()
+        dispatch(clearCart())
+        
     }
 
     if (cartData.length === 0) {

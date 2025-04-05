@@ -5,26 +5,28 @@ import RestaurantMenu from "./components/RestaurantMenu"
 import { CartContext, Coordinates, Visibility } from "./context/contextApi"
 import { useEffect, useState } from "react"
 import Cart from "./components/Cart"
+import { useSelector } from "react-redux"
 
 function App() {
 
-    const [visible, setVisible] = useState(false);
+    // const [visible, setVisible] = useState(false);
     const [coord, setCoord] = useState({lat : 28.5355161, lng : 77.3910265})
-    const [cartData, setCartData] = useState([])
+    // const [cartData, setCartData] = useState([])
+    const visible = useSelector((state) => state.toogleSlice.searchBarToogle)
 
-    function getDataFromLocalStorage() {
-        let data = JSON.parse(localStorage.getItem("cartData")) || []
-        setCartData(data)
-    }
+    // function getDataFromLocalStorage() {
+    //     let data = JSON.parse(localStorage.getItem("cartData")) || []
+    //     setCartData(data)
+    // }
 
-    useEffect(() => {
-        getDataFromLocalStorage()
-    }, [])
+    // useEffect(() => {
+    //     getDataFromLocalStorage()
+    // }, [])
 
   return (
-    <CartContext.Provider value={{cartData, setCartData}}>
+    // <CartContext.Provider value={{cartData, setCartData}}>
         <Coordinates.Provider value={{coord, setCoord}}>
-            <Visibility.Provider value={{visible, setVisible}}>
+            {/* <Visibility.Provider value={{visible, setVisible}}> */}
                 <div className={visible ? "overflow-hidden max-h-screen" : ""}>
                     <Routes>
                         <Route path="/" element={<Head/>}>
@@ -35,9 +37,9 @@ function App() {
                         </Route>
                     </Routes>
                 </div>
-            </Visibility.Provider>
+            {/* </Visibility.Provider> */}
         </Coordinates.Provider>
-    </CartContext.Provider>
+    // </CartContext.Provider>
   )
 }
 

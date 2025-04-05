@@ -1,6 +1,8 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {  CartContext, Coordinates } from '../context/contextApi'
+import { useDispatch, useSelector } from 'react-redux'
+import { addToCart } from '../utils/cartSlice'
 
 let veg = "https://i.pinimg.com/originals/e4/1f/f3/e41ff3b10a26b097602560180fb91a62.png"
 let nonVeg = "https://www.pngkey.com/png/full/245-2459071_non-veg-icon-non-veg-symbol-png.png"
@@ -210,17 +212,22 @@ function DetailMenuCard({info, resInfo}) {
     
     const {name, defaultPrice, price, itemAttribute : {vegClassifier}, ratings : {aggregatedRating : {rating, ratingCountV2}}, description = "", imageId} = info;
 
-    const {cartData, setCartData} = useContext(CartContext)
+    // const {cartData, setCartData} = useContext(CartContext)
+    const cartData = useSelector((state) => state.cartSlice.cartItems)
+
+    const getResInfoFromLocalStore = useSelector((state) => state.cartSlice.resInfo)
+    console.log(getResInfoFromLocalStore)
+    const dispatch = useDispatch()
+
 
     function handleAddToCart() {
         console.log(resInfo.name)
         const isAdded = cartData.find((data) => data.id === info.id)
-        let getResInfoFromLocalStore = JSON.parse(localStorage.getItem("resInfo")) || []
+        // let getResInfoFromLocalStore = JSON.parse(localStorage.getItem("resInfo")) || []
+        
         if (!isAdded) {
             if (getResInfoFromLocalStore.name === resInfo.name || getResInfoFromLocalStore.length === 0) {
-                setCartData((prev) => [...prev, info])
-                localStorage.setItem("cartData", JSON.stringify([...cartData, info]))
-                localStorage.setItem("resInfo", JSON.stringify(resInfo))
+                dispatch(addToCart({info, resInfo}))
             }
             else{
                 alert("Different restaurant item")
