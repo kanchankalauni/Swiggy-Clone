@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom'
 import {  CartContext, Coordinates } from '../context/contextApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart } from '../utils/cartSlice'
+import toast from 'react-hot-toast'
 
 let veg = "https://i.pinimg.com/originals/e4/1f/f3/e41ff3b10a26b097602560180fb91a62.png"
 let nonVeg = "https://www.pngkey.com/png/full/245-2459071_non-veg-icon-non-veg-symbol-png.png"
@@ -228,13 +229,16 @@ function DetailMenuCard({info, resInfo}) {
         if (!isAdded) {
             if (getResInfoFromLocalStore.name === resInfo.name || getResInfoFromLocalStore.length === 0) {
                 dispatch(addToCart({info, resInfo}))
+                toast.success("Food added to the cart")
             }
             else{
-                alert("Different restaurant item")
+                // alert("Different restaurant item")
+                toast.error("Different restaurant item")
             }
         }
         else{
-            alert("already added")
+            // alert("already added")
+            toast.error("Food already added to the cart")
         }
     }
 

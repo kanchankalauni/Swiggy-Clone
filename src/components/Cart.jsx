@@ -3,6 +3,7 @@ import { CartContext } from '../context/contextApi'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
 import { clearCart, deleteItem } from '../utils/cartSlice';
+import toast from 'react-hot-toast';
 
 function Cart() {
     // const { cartData, setCartData } = useContext(CartContext)
@@ -24,9 +25,11 @@ function Cart() {
             newArr.splice(i, 1)
             // setCartData(newArr)
             dispatch(deleteItem(newArr))
+            toast.success("Item Removed")
         }
         else{
             handleClearCart()
+            toast.success("Cart is clear")
         }
     }
 
