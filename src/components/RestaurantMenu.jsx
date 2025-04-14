@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import {  CartContext, Coordinates } from '../context/contextApi'
 import { useDispatch, useSelector } from 'react-redux'
-import { addToCart } from '../utils/cartSlice'
+import { addToCart, clearCart } from '../utils/cartSlice'
 import toast from 'react-hot-toast'
 
 let veg = "https://i.pinimg.com/originals/e4/1f/f3/e41ff3b10a26b097602560180fb91a62.png"
@@ -215,6 +215,7 @@ function DetailMenuCard({info, resInfo}) {
 
     // const {cartData, setCartData} = useContext(CartContext)
     const cartData = useSelector((state) => state.cartSlice.cartItems)
+    const [isDiffRes, setIsDiffRes] = useState(false)
 
     const getResInfoFromLocalStore = useSelector((state) => state.cartSlice.resInfo)
     console.log(getResInfoFromLocalStore)
@@ -233,7 +234,8 @@ function DetailMenuCard({info, resInfo}) {
             }
             else{
                 // alert("Different restaurant item")
-                toast.error("Different restaurant item")
+                // toast.error("Different restaurant item")
+                setIsDiffRes((prev) => !prev)
             }
         }
         else{
@@ -242,10 +244,20 @@ function DetailMenuCard({info, resInfo}) {
         }
     }
 
+    function handleIsDiffRes(){
+        setIsDiffRes((prev) => !prev)
+    }
+
+    function handleClearCart() {
+        dispatch(clearCart())
+        handleIsDiffRes()
+        toast.success("Cart is clear")
+    }
+
     const [isMore, setIsMore] = useState(false)
     let trimDes = description.substring(0, 140) + "..."
     return (
-    <>
+    <div className='relative w-full'>
         <div className='flex w-full justify-between min-h-[182px]'>
             <div className='w-[70%]'>
                 <img className='w-5 rounded-sm' src={vegClassifier === "VEG" ? veg : nonVeg} alt=""/>
@@ -268,7 +280,18 @@ function DetailMenuCard({info, resInfo}) {
             </div>
         </div>
         <hr className='my-5'/>
-    </>
+        {
+            isDiffRes && 
+            <div className='w-[520px] h-[204px] flex flex-col gap-2 p-8 left-[33%] border z-50 shadow-md fixed bottom-10 bg-white'>
+                <h1>Items already in cart</h1>
+                <p>Your cart contains items from other restaurant. Would you like to reset your cart for adding items from this restaurant?</p>
+                <div className='flex justify-evenly w-full gap-3'>
+                    <button onClick={handleIsDiffRes} className='border-2 w-1/2 p-3 border-green-600 text-green-600'>NO</button>
+                    <button onClick={handleClearCart} className='w-1/2 p-3 bg-green-600 text-white'>YES, STRAT AFRESH</button>
+                </div>
+            </div>
+        }
+    </div>
 )}
 
 

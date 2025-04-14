@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { CartContext } from '../context/contextApi'
 import { Link } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
@@ -37,7 +37,7 @@ function Cart() {
         // setCartData([])
         // localStorage.setItem("cartData", JSON.stringify([]))
         dispatch(clearCart())
-        
+        toast.success("Cart is clear")
     }
 
     if (cartData.length === 0) {
@@ -66,10 +66,8 @@ function Cart() {
                         </div>
                     ))
                 }
-
                 <h1 className='my-2'>Total Price - ₹{totalPrice}</h1>
                 <button onClick={handleClearCart} className='p-3 bg-green-600 rounded-lg my-7'>Clear Cart</button>
-
             </div>
         </div>
     )
