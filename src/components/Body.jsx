@@ -41,7 +41,7 @@ function Body() {
         <div className='w-[75%] mx-auto mt-1 overflow-hidden'>
             <OnYourMind data={onYourMindData}/>
             <TopRestaurant data={topRestaurantData} title={topResTitle}/>
-            <OnlineFoodDelivery data={topRestaurantData} title={onlineTitle}/>
+            <OnlineFoodDelivery data={filterVal ? topRestaurantData : filteredData} title={onlineTitle}/>
         </div>
     </div>
   )
