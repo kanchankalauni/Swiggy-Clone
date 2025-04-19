@@ -3,6 +3,7 @@ import OnYourMind from './onYourMind';
 import TopRestaurant from './TopRestaurant';
 import OnlineFoodDelivery from './OnlineFoodDelivery';
 import { Coordinates } from '../context/contextApi';
+import { useSelector } from 'react-redux';
 
 function Body() {
 
@@ -29,6 +30,10 @@ function Body() {
         fetchData()
     }, [lat, lng]);
 
+    const filterVal = useSelector((state => state.filterSlice.filterVal))
+
+    const filteredData = []
+
     if (data.communication) {
         return <div className='mt-40 flex flex-col justify-center items-center'>
             <img className='w-72' src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy.f_auto.q_auto.w_476.h_476/portal/m/location_unserviceable.png" alt="" />
@@ -41,7 +46,7 @@ function Body() {
         <div className='w-[75%] mx-auto mt-1 overflow-hidden'>
             <OnYourMind data={onYourMindData}/>
             <TopRestaurant data={topRestaurantData} title={topResTitle}/>
-            <OnlineFoodDelivery data={filterVal ? topRestaurantData : filteredData} title={onlineTitle}/>
+            <OnlineFoodDelivery data={filterVal ? filteredData : topRestaurantData} title={onlineTitle}/>
         </div>
     </div>
   )
