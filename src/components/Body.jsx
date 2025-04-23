@@ -12,8 +12,8 @@ function Body() {
     const [onlineTitle, setOnlineTitle] = useState("")
     const [onYourMindData, setOnYourMindData] = useState([])
     const [data, setData] = useState({})
-    const {coord : {lat, lng}} = useContext(Coordinates)
-    
+    const { coord: { lat, lng } } = useContext(Coordinates)
+
 
     async function fetchData() {
         const data = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`)
@@ -32,7 +32,18 @@ function Body() {
 
     const filterVal = useSelector((state => state.filterSlice.filterVal))
 
-    const filteredData = []
+    const filteredData = topRestaurantData && topRestaurantData?.filter(item => {
+        // console.log(item)
+        if (!filterVal) return true;
+
+        switch (filterVal) {
+            case "Ratings 4.0": return item?.info?.avgRating > 4
+            case "Offers": return item?.info?.aggregatedDiscountInfoV3 ? item?.info?.aggregatedDiscountInfoV3 : ""
+            case "Rs. 300-Rs. 600": return item?.info?.costForTwo?.slice(1, 4) >= 300 && item?.info?.costForTwo?.slice(1, 4) <= 600
+            case "Less than Rs. 300": return item?.info?.costForTwo?.slice(1, 4) < 300
+            default: return true;
+        }
+    })
 
     if (data.communication) {
         return <div className='mt-40 flex flex-col justify-center items-center'>
@@ -41,15 +52,15 @@ function Body() {
         </div>
     }
 
-  return (
-    <div className='w-full'>
-        <div className='w-[75%] mx-auto mt-1 overflow-hidden'>
-            <OnYourMind data={onYourMindData}/>
-            <TopRestaurant data={topRestaurantData} title={topResTitle}/>
-            <OnlineFoodDelivery data={filterVal ? filteredData : topRestaurantData} title={onlineTitle}/>
+    return (
+        <div className='w-full'>
+            <div className='w-[75%] mx-auto mt-1 overflow-hidden'>
+                {onYourMindData && <OnYourMind data={onYourMindData} />}
+                <TopRestaurant data={topRestaurantData} title={topResTitle} />
+                {topRestaurantData && <OnlineFoodDelivery data={filterVal ? filteredData : topRestaurantData} title={onlineTitle} />}
+            </div>
         </div>
-    </div>
-  )
+    )
 }
 
 export default Body

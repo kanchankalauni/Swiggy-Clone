@@ -5,20 +5,7 @@ import { setFilterValue } from '../utils/filterSlice'
 
 function OnlineFoodDelivery({data , title}) {
 
-    const filterOptions = [
-        {
-            filterName : "Ratings 4.0"
-        },
-        {
-            filterName : "Offers"
-        },
-        {
-            filterName : "Rs. 300-Rs. 600"
-        },
-        {
-            filterName : "Less than Rs. 300"
-        },
-    ]
+    const filterOptions = ["Ratings 4.0","Offers","Rs. 300-Rs. 600","Less than Rs. 300"]
 
     const [activeBtn, setActiveBtn] = useState(null)
 
@@ -26,8 +13,9 @@ function OnlineFoodDelivery({data , title}) {
 
     function handleFilterBtn(filterName) {
         setActiveBtn(activeBtn === filterName ? null : filterName)
-        dispatch(setFilterValue(activeBtn))
+        // dispatch(setFilterValue(activeBtn))
     }
+    dispatch(setFilterValue(activeBtn))
 
   return (
     <div className='mt-10'>
@@ -35,9 +23,9 @@ function OnlineFoodDelivery({data , title}) {
 
         <div className='my-7 flex gap-3'>
         {
-            filterOptions.map((data) => (
-                <button onClick={() => handleFilterBtn(data.filterName)} className={'filterBtn flex gap-2 ' + (activeBtn === data.filterName ? "active" : "")}>
-                <p>{data.filterName}</p>
+            filterOptions.map((filterName) => (
+                <button onClick={() => handleFilterBtn(filterName)} className={'filterBtn flex gap-2 ' + (activeBtn === filterName ? "active" : "")}>
+                <p>{filterName}</p>
                 <i className='fi text-sm mt-1 fi-br-cross hidden'></i>
                 </button>
             ))
