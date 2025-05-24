@@ -6,6 +6,7 @@ import { CartContext, Coordinates, Visibility } from "./context/contextApi"
 import { useEffect, useState } from "react"
 import Cart from "./components/Cart"
 import { useSelector } from "react-redux"
+import SigninPage from "./components/SigninPage"
 
 function App() {
 
@@ -33,6 +34,7 @@ function App() {
                             <Route path="/" element={<Body/>}/>
                             <Route path="/restaurantMenu/:id" element={<RestaurantMenu/>}/>
                             <Route path="/cart" element={<Cart/>}/>
+                            <Route path="/signin" element={<SigninPage/>}/>
                             <Route path="/*" element={<h1>Coming soon.....</h1>}/>
                         </Route>
                     </Routes>

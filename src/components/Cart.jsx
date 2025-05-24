@@ -27,7 +27,7 @@ function Cart() {
             dispatch(deleteItem(newArr))
             toast.success("Item Removed")
         }
-        else{
+        else {
             handleClearCart()
             toast.success("Cart is clear")
         }
@@ -38,6 +38,10 @@ function Cart() {
         // localStorage.setItem("cartData", JSON.stringify([]))
         dispatch(clearCart())
         toast.success("Cart is clear")
+    }
+
+    function handlePlaceOrder() {
+        toast.success("order placed")
     }
 
     if (cartData.length === 0) {
@@ -67,7 +71,10 @@ function Cart() {
                     ))
                 }
                 <h1 className='my-2'>Total Price - ₹{totalPrice}</h1>
-                <button onClick={handleClearCart} className='p-3 bg-green-600 rounded-lg my-7'>Clear Cart</button>
+                <div className='flex justify-between'>
+                    <button onClick={handlePlaceOrder} className='p-3 bg-green-600 rounded-lg my-7'>Place Order</button>
+                    <button onClick={handleClearCart} className='p-3 bg-green-600 rounded-lg my-7'>Clear Cart</button>
+                </div>
             </div>
         </div>
     )
