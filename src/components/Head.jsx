@@ -42,6 +42,7 @@ function Head() {
     // const {visible, setVisible} = useContext(Visibility)
     // const {cartData, setCartData} = useContext(CartContext)
     const cartData = useSelector((state) => state.cartSlice.cartItems)
+    const userData = useSelector((state) => state.authSlice.userData)
 
     // access data from redux store using useSelector
     const visible = useSelector((state) => state.toogleSlice.searchBarToogle)
@@ -131,6 +132,15 @@ function Head() {
                 <div className='flex items-center gap-14'>
                     {
                         navItems.map((data) => (
+                            data.name == "Sign in" ? 
+                            <Link to={data.path}>
+                                <div className='flex items-center gap-3'>
+                                    { userData ? <img src={userData.photo} alt="" /> : <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>}
+                                    <p className='text-lg font-medium text-gray-700'>{userData ? userData.name : data.name}</p>
+                                    { data.name === "Cart" && !cartData.length == 0 && <p>{cartData.length}</p>}
+                                </div>
+                            </Link> 
+                            : 
                             <Link to={data.path}>
                                 <div className='flex items-center gap-3'>
                                     <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
