@@ -2,7 +2,7 @@ import React, { useContext, useState } from 'react'
 import { Link, Outlet } from 'react-router-dom'
 import { CartContext, Coordinates, Visibility } from '../context/contextApi'
 import { useDispatch, useSelector } from 'react-redux'
-import { toogleSearchBar } from '../utils/toogleSlice'
+import { toggleLogin, toogleSearchBar } from '../utils/toogleSlice'
 
 function Head() {
 
@@ -46,6 +46,7 @@ function Head() {
 
     // access data from redux store using useSelector
     const visible = useSelector((state) => state.toogleSlice.searchBarToogle)
+    const loginVisible = useSelector((state) => state.toogleSlice.loginToggle)
     const dispatch = useDispatch()
 
     const [searchResult, setSearchResult] = useState([])
@@ -55,8 +56,11 @@ function Head() {
 
     function handleVisibility() {
         // setVisible(prev => !prev)
-
         dispatch(toogleSearchBar())
+    }
+
+    function handleLogin() {
+        dispatch(toggleLogin())
     }
 
     async function searchResultFun(val) {
@@ -81,9 +85,8 @@ function Head() {
     }
 
   return (
-    <div className='relative w-full'>
-        
-        <div>
+    <>
+        <div className='w-full'>
             <div onClick={handleVisibility} className={'w-full bg-black/50 h-full absolute z-30 ' + (visible ? "visible" : " invisible")}></div>
             <div className={'bg-white flex justify-end w-[40%] h-full p-5 z-40 absolute duration-500 ' + (visible ? "left-0" : "-left-[100%]")}>
                 <div className='flex flex-col w-[50%] mr-6 mt-3 gap-4'>
@@ -115,47 +118,60 @@ function Head() {
             </div>
         </div>
 
-        <div className='w-full sticky bg-white z-20 top-0 shadow-md h-20 flex justify-center items-center'>
-            <div className='flex justify-around w-[80%] gap-5'>
-                <div className='flex items-center '>
-                    <Link to={"/"}>
-                        <img className='w-24' src="https://1000logos.net/wp-content/uploads/2021/05/Swiggy-emblem.png" alt="Swiggy Logo" />
-                    </Link>
-                    <div className='flex items-center ' onClick={handleVisibility}>
-                        <p className='flex items-center'>
-                            <span className='font-bold border-b-2 border-black'>Other</span> 
-                            <span className='ml-2 w-[150px] text-sm opacity-85 line-clamp-1'>{address}</span> 
-                        </p>
-                        <i className="text-2xl text-orange-500 fi fi-rs-angle-small-down"></i>
+        <div className='w-full'>
+            <div onClick={handleLogin} className={'w-full bg-black/50 h-full absolute z-30 ' + (loginVisible ? "visible" : " invisible")}></div>
+            <div className={'bg-white flex justify-end w-[40%] h-full p-5 z-40 absolute duration-500 ' + (loginVisible ? "right-0" : "-right-[100%]")}>
+                <div className='flex flex-col w-[50%] mr-6 mt-3 gap-4'>
+                    <i className='fi fi-br-cross' onClick={handleLogin}></i>
+                    <div>
+                        <h2>Login</h2>
+                        
                     </div>
-                </div>
-                <div className='flex items-center gap-14'>
-                    {
-                        navItems.map((data) => (
-                            data.name == "Sign in" ? 
-                            <Link to={data.path}>
-                                <div className='flex items-center gap-3'>
-                                    { userData ? <img src={userData.photo} alt="" /> : <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>}
-                                    <p className='text-lg font-medium text-gray-700'>{userData ? userData.name : data.name}</p>
-                                    { data.name === "Cart" && !cartData.length == 0 && <p>{cartData.length}</p>}
-                                </div>
-                            </Link> 
-                            : 
-                            <Link to={data.path}>
-                                <div className='flex items-center gap-3'>
-                                    <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
-                                    <p className='text-lg font-medium text-gray-700'>{data.name}</p>
-                                    { data.name === "Cart" && !cartData.length == 0 && <p>{cartData.length}</p>}
-                                </div>
-                            </Link>
-                        ))
-                    }
                 </div>
             </div>
         </div>
-
-        <Outlet/>
-    </div>
+        <div className='relative w-full'>
+            <div className='w-full sticky bg-white z-20 top-0 shadow-md h-20 flex justify-center items-center'>
+                <div className='flex justify-around w-[80%] gap-5'>
+                    <div className='flex items-center '>
+                        <Link to={"/"}>
+                            <img className='w-24' src="https://1000logos.net/wp-content/uploads/2021/05/Swiggy-emblem.png" alt="Swiggy Logo" />
+                        </Link>
+                        <div className='flex items-center ' onClick={handleVisibility}>
+                            <p className='flex items-center'>
+                                <span className='font-bold border-b-2 border-black'>Other</span> 
+                                <span className='ml-2 w-[150px] text-sm opacity-85 line-clamp-1'>{address}</span> 
+                            </p>
+                            <i className="text-2xl text-orange-500 fi fi-rs-angle-small-down"></i>
+                        </div>
+                    </div>
+                    <div className='flex items-center gap-14'>
+                        {
+                            navItems.map((data) => (
+                                data.name == "Sign in" ? 
+                                <div onClick={handleLogin}>
+                                    <div className='flex items-center gap-3'>
+                                        { userData ? <img src={userData.photo} alt="" /> : <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>}
+                                        <p className='text-lg font-medium text-gray-700'>{userData ? userData.name : data.name}</p>
+                                        { data.name === "Cart" && !cartData.length == 0 && <p>{cartData.length}</p>}
+                                    </div>
+                                </div> 
+                                : 
+                                <Link to={data.path}>
+                                    <div className='flex items-center gap-3'>
+                                        <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
+                                        <p className='text-lg font-medium text-gray-700'>{data.name}</p>
+                                        { data.name === "Cart" && !cartData.length == 0 && <p>{cartData.length}</p>}
+                                    </div>
+                                </Link>
+                            ))
+                        }
+                    </div>
+                </div>
+            </div>
+            <Outlet/>
+        </div>
+    </>
   )
 }
 
