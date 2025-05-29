@@ -3,6 +3,7 @@ import { Link, Outlet } from 'react-router-dom'
 import { CartContext, Coordinates, Visibility } from '../context/contextApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleLogin, toogleSearchBar } from '../utils/toogleSlice'
+import SigninBtn from './SigninBtn'
 
 function Head() {
 
@@ -120,13 +121,15 @@ function Head() {
 
         <div className='w-full'>
             <div onClick={handleLogin} className={'w-full bg-black/50 h-full absolute z-30 ' + (loginVisible ? "visible" : " invisible")}></div>
-            <div className={'bg-white flex justify-end w-[40%] h-full p-5 z-40 absolute duration-500 ' + (loginVisible ? "right-0" : "-right-[100%]")}>
-                <div className='flex flex-col w-[50%] mr-6 mt-3 gap-4'>
+            <div className={'bg-white flex w-[40%] h-full p-5 z-40 absolute duration-500 ' + (loginVisible ? "right-0" : "-right-[100%]")}>
+                <div className='m-3 w-[60%]'>
                     <i className='fi fi-br-cross' onClick={handleLogin}></i>
-                    <div>
-                        <h2>Login</h2>
-                        
+                    <div className='my-10 w-full flex justify-between items-center'>
+                        <h2 className='font-semibold text-4xl border-b-2 border-black pb-5'>Login</h2>
+                        <img className='w-28' src="https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto/Image-login_btpq7r" alt="" />
                     </div>
+                    <SigninBtn/>
+                    <p className='my-2 text-xs opacity-70'>By clicking on Login, I accept the Terms & Conditions & Privacy Policy</p>
                 </div>
             </div>
         </div>

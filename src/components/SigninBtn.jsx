@@ -4,8 +4,9 @@ import { auth, provider } from '../config/firebaseAuth'
 import { useDispatch, useSelector } from 'react-redux'
 import { addUserData, removeUserData } from '../utils/authSlice'
 import { useNavigate } from 'react-router-dom'
+import { toggleLogin } from '../utils/toogleSlice'
 
-function SigninPage() {
+function SigninBtn() {
 
     const dispatch = useDispatch()
     const navigate = useNavigate()
@@ -19,28 +20,27 @@ function SigninPage() {
             photo: data.user.photoURL
         }
         dispatch(addUserData(userData))
+        dispatch(toggleLogin())
         navigate("/")
     }
 
     async function handleLogout() {
         await signOut(auth)
         dispatch(removeUserData())
-        navigate("/")
+        dispatch(toggleLogin())
+        // navigate("/")
     }
 
     return (
-        <div>
-            Login
-            <button onClick={handleAuth} className='bg-slate-300 p-5 mt-6'>
-                Google login
-            </button>
+        <>
+
             {
-                userData && <button onClick={handleLogout} className='bg-slate-300 p-5 mt-6'>
+                userData ? (<button onClick={handleLogout} className='w-full text-2xl p-5 my-5 bg-[#fc8019] text-white'>
                     Logout
-                </button>
+                </button>) : (<button onClick={handleAuth} className='w-full text-2xl p-5 my-5 bg-[#fc8019] text-white'>Login with GOOGLE</button>)
             }
-        </div>
+        </>
     )
 }
 
-export default SigninPage
+export default SigninBtn

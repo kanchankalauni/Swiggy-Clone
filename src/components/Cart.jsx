@@ -11,6 +11,8 @@ function Cart() {
 
     const navigate = useNavigate()
     const cartData = useSelector((state) => state.cartSlice.cartItems)
+    const resInfo = useSelector((state) => state.cartSlice.resInfo)
+    console.log(resInfo)
     const dispatch = useDispatch()
     // console.log(cartData)
     // let totalPrice = cartData.reduce((acc, curVal) => (acc + (curVal.price / 100 || curVal.defaultPrice / 100)), 0)
@@ -63,6 +65,9 @@ function Cart() {
 
     return (
         <div className='w-full'>
+            <div>
+                <img className='rounded-xl aspect-square' src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/" + resInfo.imageId || resInfo.cloudinaryImageId} alt="" />
+            </div>
             <div className='w-[50%] mx-auto'>
                 {
                     cartData.map((data, i) => (

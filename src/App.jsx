@@ -6,7 +6,7 @@ import { CartContext, Coordinates, Visibility } from "./context/contextApi"
 import { useEffect, useState } from "react"
 import Cart from "./components/Cart"
 import { useSelector } from "react-redux"
-import SigninPage from "./components/SigninPage"
+import SigninPage from "./components/SigninBtn"
 
 function App() {
 
@@ -14,6 +14,7 @@ function App() {
     const [coord, setCoord] = useState({lat : 28.5355161, lng : 77.3910265})
     // const [cartData, setCartData] = useState([])
     const visible = useSelector((state) => state.toogleSlice.searchBarToogle)
+    const loginVisible = useSelector((state) => state.toogleSlice.loginToggle)
 
     // function getDataFromLocalStorage() {
     //     let data = JSON.parse(localStorage.getItem("cartData")) || []
@@ -28,7 +29,7 @@ function App() {
     // <CartContext.Provider value={{cartData, setCartData}}>
         <Coordinates.Provider value={{coord, setCoord}}>
             {/* <Visibility.Provider value={{visible, setVisible}}> */}
-                <div className={visible ? "overflow-hidden max-h-screen" : ""}>
+                <div className={visible || loginVisible ? "overflow-hidden max-h-screen" : ""}>
                     <Routes>
                         <Route path="/" element={<Head/>}>
                             <Route path="/" element={<Body/>}/>
