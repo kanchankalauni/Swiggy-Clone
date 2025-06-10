@@ -223,7 +223,7 @@ function DetailMenuCard({info, resInfo}) {
 
 
     function handleAddToCart() {
-        console.log(resInfo.name)
+        // console.log(resInfo.name)
         const isAdded = cartData.find((data) => data.id === info.id)
         // let getResInfoFromLocalStore = JSON.parse(localStorage.getItem("resInfo")) || []
         
