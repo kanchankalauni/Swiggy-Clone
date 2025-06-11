@@ -70,7 +70,8 @@ function Cart() {
     return (
         <div className='w-full'>
             <div className='w-[50%] mx-auto'>
-                {/* <Link to={`/restaurantMenu/${resInfo.id}`}> */}
+                <Link to={`/restaurantMenu/${resInfo.id}`}>
+                {console.log(resInfo.id)}
                     <div className='my-10 flex gap-5'>
                         <img className='rounded-xl w-40 aspect-square' src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/" + resInfo.cloudinaryImageId} alt="" />
                         <div>
@@ -78,7 +79,7 @@ function Cart() {
                             <p className='mt-3 text-xl'>{resInfo.areaName}</p>
                         </div>
                     </div>
-                {/* </Link> */}
+                </Link>
                 <div>
                     {cartData.map(({ name, defaultPrice, price, itemAttribute: { vegClassifier }, ratings: { aggregatedRating: { rating, ratingCountV2 } }, description = "", imageId }, i) => {
                         {/* const [isMore, setIsMore] = useState(false) */}
