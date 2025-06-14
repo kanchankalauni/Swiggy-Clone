@@ -74,7 +74,7 @@ function Head() {
     <>
         <div className='w-full'>
             <div onClick={handleVisibility} className={'w-full bg-black/50 h-full absolute z-30 ' + (visible ? "visible" : " invisible")}></div>
-            <div className={'bg-white flex justify-end w-[40%] h-full p-5 z-40 absolute duration-500 ' + (visible ? "left-0" : "-left-[100%]")}>
+            <div className={'bg-white flex justify-end w-full md:w-[40%] h-full p-5 z-40 absolute duration-500 ' + (visible ? "left-0" : "-left-[100%]")}>
                 <div className='flex flex-col w-[50%] mr-6 mt-3 gap-4'>
                     <i className='fi fi-br-cross' onClick={handleVisibility}></i>
                     <input type="text" className='border p-5 focus:outline-none focus:shadow-lg' onChange={(e) => searchResultFun(e.target.value)}/>
@@ -106,7 +106,7 @@ function Head() {
 
         <div className='w-full'>
             <div onClick={handleLogin} className={'w-full bg-black/50 h-full absolute z-30 ' + (loginVisible ? "visible" : " invisible")}></div>
-            <div className={'bg-white flex w-[40%] h-full p-5 z-40 absolute duration-500 ' + (loginVisible ? "right-0" : "-right-[100%]")}>
+            <div className={'bg-white flex w-full md:w-[40%] h-full p-5 z-40 absolute duration-500 ' + (loginVisible ? "right-0" : "-right-[100%]")}>
                 <div className='m-3 w-[60%]'>
                     <i className='fi fi-br-cross' onClick={handleLogin}></i>
                     <div className='my-10 w-full flex justify-between items-center'>
@@ -162,7 +162,14 @@ function Head() {
                     <div className='flex items-center md:hidden gap-10 mr-4'>
                         {
                             navItems.map(data => (
-                                <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
+                                data.name == "Sign in" ? (
+                                    <div onClick={handleLogin}>
+                                        <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
+                                    </div>
+                                ) :
+                                <Link to={data.path}>
+                                    <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
+                                </Link>
                             ))
                         }
                     </div>
