@@ -69,7 +69,7 @@ function Cart() {
 
     return (
         <div className='w-full'>
-            <div className='w-[50%] mx-auto'>
+            <div className='w-[95%] md:w-[800px] mx-auto'>
                 <Link to={`/restaurantMenu/${resInfo.id}`}>
                 {console.log(resInfo.id)}
                     <div className='my-10 flex gap-5'>
@@ -80,6 +80,7 @@ function Cart() {
                         </div>
                     </div>
                 </Link>
+                <hr className='my-5 border-2'/>
                 <div>
                     {cartData.map(({ name, defaultPrice, price, itemAttribute: { vegClassifier }, ratings: { aggregatedRating: { rating, ratingCountV2 } }, description = "", imageId }, i) => {
                         {/* const [isMore, setIsMore] = useState(false) */}
@@ -87,7 +88,7 @@ function Cart() {
                         return (
                             <>
                                 <div className='flex w-full my-5 justify-between min-h-[182px]'>
-                                    <div className='w-[70%]'>
+                                    <div className='w-[55%] md:w-[70%]'>
                                         <img className='w-5 rounded-sm' src={vegClassifier === "VEG" ? veg : nonVeg} alt="" />
                                         <h1 className='font-semibold text-lg'>{name}</h1>
                                         <p className='font-semibold text-lg'>₹{defaultPrice / 100 || price / 100}</p>
@@ -103,9 +104,9 @@ function Cart() {
                                             </div> : <span >{description}</span>
                                         } */}
                                     </div>
-                                    <div className='w-[20%] relative h-full'>
+                                    <div className='w-[40%] md:w-[20%] relative h-full'>
                                         <img className='rounded-xl aspect-square' src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/" + imageId} alt="" />
-                                        <button onClick={handleRemoveFromCart} className='bg-white absolute bottom-[-20px] left-5 text-lg text-red-500 font-bold rounded-xl border px-10 py-2 drop-shadow'>Remove</button>
+                                        <button onClick={handleRemoveFromCart} className='bg-white absolute bottom-[-20px] left-1/2 -translate-x-1/2 text-base text-red-500 font-bold rounded-xl border px-5 py-2 drop-shadow'>Remove</button>
                                     </div>
                                 </div>
                                 <hr className='my-5' />
@@ -113,7 +114,7 @@ function Cart() {
                         )
                     })}
                 </div>
-                <h1 className='my-2'>Total Price - ₹{totalPrice}</h1>
+                <h1 className='text-2xl my-2'>Total Price - <span className='font-bold'>₹{totalPrice}</span></h1>
                 <div className='flex justify-between'>
                     <button onClick={handlePlaceOrder} className='p-3 bg-green-600 rounded-lg my-7'>Place Order</button>
                     <button onClick={handleClearCart} className='p-3 bg-green-600 rounded-lg my-7'>Clear Cart</button>

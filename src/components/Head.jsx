@@ -122,7 +122,7 @@ function Head() {
 
         <div className='relative w-full'>
             <div className='w-full sticky bg-white z-20 top-0 shadow-md h-20 flex justify-center items-center'>
-                <div className='w-full md:w-[80%] flex justify-around gap-5'>
+                <div className='w-full sm:w-[80%] lg:w-[80%] flex justify-around gap-5'>
                     <div className='flex items-center '>
                         <Link to={"/"}>
                             <div className='w-20'>
@@ -168,7 +168,12 @@ function Head() {
                                     </div>
                                 ) :
                                 <Link to={data.path}>
-                                    <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
+                                    <div className='flex items-center gap-3'>
+                                        <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
+                                        {
+                                            data.name === "Cart" && !cartData.length == 0 && <p>{cartData.length}</p>
+                                        }
+                                    </div>
                                 </Link>
                             ))
                         }

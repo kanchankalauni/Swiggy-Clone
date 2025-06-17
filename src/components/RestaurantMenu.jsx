@@ -85,7 +85,7 @@ function RestaurantMenu() {
 
     return (
         <div className='w-full'>
-            {menuData.length ? <div className='w-[800px] mx-auto pt-8'>
+            {menuData.length ? <div className='w-[95%] md:w-[800px] mx-auto pt-8'>
                 <p className='text-[10px] tex10-slate-400'> <Link to={"/"}><span className='hover:text-slate-700 cursor-pointer'>Home</span></Link> / <Link to={"/"}><span className='hover:text-slate-700 cursor-pointer'>{resInfo?.city}</span></Link> / <span className='text-slate-700'>{resInfo.name}</span></p>
                 <h1 className='font-bold pt-9 text-2xl'>{resInfo.name}</h1>
                 <div className='w-full h-[160px] px-4 pb-4 bg-gradient-to-t from-slate-200/70 mt-5 rounded-[30px]'>
@@ -290,7 +290,7 @@ function DetailMenuCard({ info, resInfo }) {
     return (
         <div className='relative w-full'>
             <div className='flex w-full justify-between min-h-[182px]'>
-                <div className='w-[70%]'>
+                <div className='w-[55%] md:w-[70%]'>
                     <img className='w-5 rounded-sm' src={vegClassifier === "VEG" ? veg : nonVeg} alt="" />
                     <h1 className='font-semibold text-lg'>{name}</h1>
                     <p className='font-semibold text-lg'>₹{defaultPrice / 100 || price / 100}</p>
@@ -300,14 +300,14 @@ function DetailMenuCard({ info, resInfo }) {
                     </div>
                     {
                         description.length > 140 ? <div>
-                            <span >{isMore ? description + " " : trimDes}</span>
-                            <button className='font-bold' onClick={() => setIsMore(!isMore)}>{isMore ? "less" : "more"}</button>
+                            <span className='line-clamp-2 md:line-clamp-none'>{isMore ? description + " " : trimDes}</span>
+                            <button className='hidden md:block font-bold' onClick={() => setIsMore(!isMore)}>{isMore ? "less" : "more"}</button>
                         </div> : <span >{description}</span>
                     }
                 </div>
-                <div className='w-[20%] relative h-full'>
+                <div className='w-[40%] md:w-[20%] relative h-full'>
                     <img className='rounded-xl aspect-square' src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/" + imageId} alt="" />
-                    <button onClick={handleAddToCart} className='bg-white absolute bottom-[-20px] left-5 text-lg text-green-700 font-bold rounded-xl border px-10 py-2 drop-shadow'>Add</button>
+                    <button onClick={handleAddToCart} className='bg-white absolute bottom-[-20px] left-1/2 -translate-x-1/2 text-lg text-green-700 font-bold rounded-xl border px-10 py-2 drop-shadow'>Add</button>
                 </div>
             </div>
             <hr className='my-5' />

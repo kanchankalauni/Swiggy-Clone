@@ -54,7 +54,7 @@ function Body() {
 
     return (
         <div className='w-full'>
-            <div className='w-[75%] mx-auto mt-1 overflow-hidden'>
+            <div className='w-full px-10 sm:w-[80%] lg:w-[80%] mx-auto mt-1 overflow-hidden'>
                 {onYourMindData && <OnYourMind data={onYourMindData} />}
                 <TopRestaurant data={topRestaurantData} title={topResTitle} />
                 {topRestaurantData && <OnlineFoodDelivery data={filterVal ? filteredData : topRestaurantData} title={onlineTitle} />}
