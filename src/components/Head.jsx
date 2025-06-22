@@ -106,7 +106,7 @@ function Head() {
 
         <div className='w-full'>
             <div onClick={handleLogin} className={'w-full bg-black/50 h-full absolute z-30 ' + (loginVisible ? "visible" : " invisible")}></div>
-            <div className={'bg-white flex w-full md:w-[40%] h-full p-5 z-40 absolute duration-500 ' + (loginVisible ? "right-0" : "-right-[100%]")}>
+            <div className={'bg-white flex w-full md:w-[40%] h-full p-5 z-40 fixed duration-500 ' + (loginVisible ? "right-0" : "-right-[100%]")}>
                 <div className='m-3 w-[60%]'>
                     <i className='fi fi-br-cross' onClick={handleLogin}></i>
                     <div className='my-10 w-full flex justify-between items-center'>
@@ -118,7 +118,6 @@ function Head() {
                 </div>
             </div>
         </div>
-
 
         <div className='relative w-full'>
             <div className='w-full sticky bg-white z-20 top-0 shadow-md h-20 flex justify-center items-center'>
