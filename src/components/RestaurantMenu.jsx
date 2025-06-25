@@ -247,7 +247,7 @@ function DetailMenuCard({ info, resInfo }) {
 
     // const {cartData, setCartData} = useContext(CartContext)
     
-    const [isDiffRes, setIsDiffRes] = useState(false)
+    // const [isDiffRes, setIsDiffRes] = useState(false)
 
     
     const dispatch = useDispatch()
@@ -274,15 +274,15 @@ function DetailMenuCard({ info, resInfo }) {
     //     }
     // }
 
-    function handleIsDiffRes() {
-        setIsDiffRes((prev) => !prev)
-    }
+    // function handleIsDiffRes() {
+    //     setIsDiffRes((prev) => !prev)
+    // }
 
-    function handleClearCart() {
-        dispatch(clearCart())
-        handleIsDiffRes()
-        toast.success("Cart is clear")
-    }
+    // function handleClearCart() {
+    //     dispatch(clearCart())
+    //     handleIsDiffRes()
+    //     toast.success("Cart is clear")
+    // }
 
     const [isMore, setIsMore] = useState(false)
     let trimDes = description.substring(0, 140) + "..."
@@ -306,11 +306,15 @@ function DetailMenuCard({ info, resInfo }) {
                 </div>
                 <div className='w-[40%] md:w-[20%] relative h-full'>
                     <img className='rounded-xl aspect-square' src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/" + imageId} alt="" />
-                    <AddToCartBtn info={info} resInfo={resInfo} handleIsDiffRes={handleIsDiffRes}/>
+                    <AddToCartBtn 
+                        info={info} 
+                        resInfo={resInfo} 
+                        // handleIsDiffRes={handleIsDiffRes}
+                    />
                 </div>
             </div>
             <hr className='my-5' />
-            {
+            {/* {
                 isDiffRes &&
                 <div className='w-[520px] h-[204px] flex flex-col gap-2 p-8 left-[33%] border z-50 shadow-md fixed bottom-10 bg-white'>
                     <h1>Items already in cart</h1>
@@ -320,7 +324,7 @@ function DetailMenuCard({ info, resInfo }) {
                         <button onClick={handleClearCart} className='w-1/2 p-3 bg-green-600 text-white'>YES, STRAT AFRESH</button>
                     </div>
                 </div>
-            }
+            } */}
         </div>
     )
 }
