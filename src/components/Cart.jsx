@@ -82,14 +82,14 @@ function Cart() {
                 </Link>
                 <hr className='my-5 border-2'/>
                 <div>
-                    {cartData.map(({ name, defaultPrice, price, itemAttribute: { vegClassifier }, ratings: { aggregatedRating: { rating, ratingCountV2 } }, description = "", imageId }, i) => {
+                    {cartData.map(({ name, defaultPrice, price, itemAttribute, ratings: { aggregatedRating: { rating, ratingCountV2 } }, description = "", imageId }, i) => {
                         {/* const [isMore, setIsMore] = useState(false) */}
                         let trimDes = description.substring(0, 140) + "..."
                         return (
                             <>
                                 <div className='flex w-full my-5 justify-between min-h-[182px]'>
                                     <div className='w-[55%] md:w-[70%]'>
-                                        <img className='w-5 rounded-sm' src={vegClassifier === "VEG" ? veg : nonVeg} alt="" />
+                                        <img className='w-5 rounded-sm' src={itemAttribute && itemAttribute.vegClassifier === "VEG" ? veg : nonVeg} alt="" />
                                         <h1 className='font-semibold text-lg'>{name}</h1>
                                         <p className='font-semibold text-lg'>₹{defaultPrice / 100 || price / 100}</p>
                                         <div className='flex items-center gap-1'>

@@ -4,6 +4,7 @@ import { CartContext, Coordinates } from '../context/contextApi'
 import { useDispatch, useSelector } from 'react-redux'
 import { addToCart, clearCart } from '../utils/cartSlice'
 import toast from 'react-hot-toast'
+import AddToCartBtn from './AddToCartBtn'
 
 let veg = "https://i.pinimg.com/originals/e4/1f/f3/e41ff3b10a26b097602560180fb91a62.png"
 let nonVeg = "https://www.pngkey.com/png/full/245-2459071_non-veg-icon-non-veg-symbol-png.png"
@@ -242,38 +243,36 @@ function DetailMenu({ itemCards, resInfo }) {
 
 function DetailMenuCard({ info, resInfo }) {
 
-    const { name, defaultPrice, price, itemAttribute: { vegClassifier }, ratings: { aggregatedRating: { rating, ratingCountV2 } }, description = "", imageId } = info;
+    const { name, defaultPrice, price, itemAttribute, ratings: { aggregatedRating: { rating, ratingCountV2 } }, description = "", imageId } = info;
 
     // const {cartData, setCartData} = useContext(CartContext)
-    const cartData = useSelector((state) => state.cartSlice.cartItems)
+    
     const [isDiffRes, setIsDiffRes] = useState(false)
 
-    const getResInfoFromLocalStore = useSelector((state) => state.cartSlice.resInfo)
-    console.log(getResInfoFromLocalStore)
+    
     const dispatch = useDispatch()
 
+    // function handleAddToCart() {
+    //     // console.log(resInfo.name)
+    //     const isAdded = cartData.find((data) => data.id === info.id)
+    //     // let getResInfoFromLocalStore = JSON.parse(localStorage.getItem("resInfo")) || []
 
-    function handleAddToCart() {
-        // console.log(resInfo.name)
-        const isAdded = cartData.find((data) => data.id === info.id)
-        // let getResInfoFromLocalStore = JSON.parse(localStorage.getItem("resInfo")) || []
-
-        if (!isAdded) {
-            if (getResInfoFromLocalStore.name === resInfo.name || getResInfoFromLocalStore.length === 0) {
-                dispatch(addToCart({ info, resInfo }))
-                toast.success("Food added to the cart")
-            }
-            else {
-                // alert("Different restaurant item")
-                // toast.error("Different restaurant item")
-                setIsDiffRes((prev) => !prev)
-            }
-        }
-        else {
-            // alert("already added")
-            toast.error("Food already added to the cart")
-        }
-    }
+    //     if (!isAdded) {
+    //         if (getResInfoFromLocalStore.name === resInfo.name || getResInfoFromLocalStore.length === 0) {
+    //             dispatch(addToCart({ info, resInfo }))
+    //             toast.success("Food added to the cart")
+    //         }
+    //         else {
+    //             // alert("Different restaurant item")
+    //             // toast.error("Different restaurant item")
+    //             setIsDiffRes((prev) => !prev)
+    //         }
+    //     }
+    //     else {
+    //         // alert("already added")
+    //         toast.error("Food already added to the cart")
+    //     }
+    // }
 
     function handleIsDiffRes() {
         setIsDiffRes((prev) => !prev)
@@ -291,7 +290,7 @@ function DetailMenuCard({ info, resInfo }) {
         <div className='relative w-full'>
             <div className='flex w-full justify-between min-h-[182px]'>
                 <div className='w-[55%] md:w-[70%]'>
-                    <img className='w-5 rounded-sm' src={vegClassifier === "VEG" ? veg : nonVeg} alt="" />
+                    <img className='w-5 rounded-sm' src={itemAttribute && itemAttribute.vegClassifier === "VEG" ? veg : nonVeg} alt="" />
                     <h1 className='font-semibold text-lg'>{name}</h1>
                     <p className='font-semibold text-lg'>₹{defaultPrice / 100 || price / 100}</p>
                     <div className='flex items-center gap-1'>
@@ -307,7 +306,7 @@ function DetailMenuCard({ info, resInfo }) {
                 </div>
                 <div className='w-[40%] md:w-[20%] relative h-full'>
                     <img className='rounded-xl aspect-square' src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/" + imageId} alt="" />
-                    <button onClick={handleAddToCart} className='bg-white absolute bottom-[-20px] left-1/2 -translate-x-1/2 text-lg text-green-700 font-bold rounded-xl border px-10 py-2 drop-shadow'>Add</button>
+                    <AddToCartBtn info={info} resInfo={resInfo} handleIsDiffRes={handleIsDiffRes}/>
                 </div>
             </div>
             <hr className='my-5' />

@@ -1,5 +1,7 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { CartContext, Coordinates } from '../context/contextApi'
+import Dishes from './Dishes'
+import SearchBarRestaurantData from './SearchBarRestaurantData'
 
 function Search() {
 
@@ -15,6 +17,14 @@ function Search() {
 
     function handleFilterBtn(filterName) {
         setActiveBtn(activeBtn === filterName ? activeBtn : filterName)
+    }
+
+    let x = ""
+    function handleSearchQuery(e) {
+        let val = e.target.value
+        if(e.keyCode == 13){
+            setSearchQuery(val)
+        }
     }
 
     async function fetchDishes() {
@@ -45,7 +55,12 @@ function Search() {
 
     return (
         <div className='w-full md:w-[800px] mx-auto'>
-            <input onChange={(e) => setSearchQuery(e.target.value)} className='border-2 px-10 py-3 focus:outline-none' type="text" placeholder='search for restaurant and food' />
+            <input 
+                // onChange={(e) => setSearchQuery(e.target.value)} 
+                onKeyDown={handleSearchQuery}
+                className='border-2 px-10 py-3 focus:outline-none' 
+                type="text" 
+                placeholder='search for restaurant and food' />
             <div className='my-7 flex flex-wrap gap-3'>
                 {
                     filterOptions.map((filterName) => (
@@ -56,20 +71,12 @@ function Search() {
                 }
             </div>
 
-            <div>
+            <div className='w-full md:w-[800px] grid grid-cols-1 md:grid-cols-2 gap-5 bg-[#f4f5f7]'>
                 {
                     activeBtn === "Dishes" ?
-                        dishes.map(
-                            ({ 
-                                card: { 
-                                    card: { 
-                                        info : { imageId = "", name, price, isVeg = 0 }, 
-                                        restaurant : {info : {name, avgRating, sla : {slaString}}}
-                                    },
-                                },
-                            }) => console.log(info)
-                        ) 
-                    : "restaurant"
+                        dishes.map((data) => <Dishes data={data}/>)
+                        :
+                        restaurantData.map((data) => <SearchBarRestaurantData data={data}/>)
                 }
             </div>
         </div>
