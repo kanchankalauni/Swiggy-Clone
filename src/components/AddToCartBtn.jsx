@@ -2,20 +2,25 @@ import React, { useState } from 'react'
 import { addToCart, clearCart } from '../utils/cartSlice'
 import { useDispatch, useSelector } from 'react-redux'
 import toast from 'react-hot-toast'
+import { toggleDiffRes } from '../utils/toogleSlice'
 
 function AddToCartBtn({ info, resInfo }) {
 
     const cartData = useSelector((state) => state.cartSlice.cartItems)
     const getResInfoFromLocalStore = useSelector((state) => state.cartSlice.resInfo)
     const dispatch = useDispatch()
-    const [isDiffRes, setIsDiffRes] = useState(false)
+    const isDiffRes = useSelector((state) => state.toogleSlice.isDiffRes)
+
 
     function handleIsDiffRes() {
-        setIsDiffRes((prev) => !prev)
+        dispatch(toggleDiffRes())
     }
 
+    // function handleIsDiffRes() {
+    //     setIsDiffRes((prev) => !prev)
+    // }
+
     function handleClearCart() {
-        console.log("first")
         dispatch(clearCart())
         handleIsDiffRes()
         toast.success("Cart is clear")
@@ -39,7 +44,7 @@ function AddToCartBtn({ info, resInfo }) {
     }
 
     return (
-        <div>
+        <>
             <button
                 onClick={handleAddToCart}
                 className='bg-white absolute bottom-[-20px] left-1/2 -translate-x-1/2 text-lg text-green-700 font-bold rounded-xl border px-10 py-2 drop-shadow'
@@ -57,7 +62,7 @@ function AddToCartBtn({ info, resInfo }) {
                     </div>
                 </div>
             }
-        </div>
+        </>
     )
 }
 

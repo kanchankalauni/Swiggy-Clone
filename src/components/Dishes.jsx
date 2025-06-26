@@ -1,6 +1,9 @@
 import React from 'react'
 import { nonVeg, veg } from '../utils/links'
 import AddToCartBtn from './AddToCartBtn'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleDiffRes } from '../utils/toogleSlice'
+import { clearCart } from '../utils/cartSlice'
 
 function Dishes({ 
     data: { 
@@ -17,6 +20,19 @@ function Dishes({
 
     let { imageId = "", name, price, isVeg = 0 } = info
     let { id, name: resName, avgRating, sla: { slaString } } = resInfo
+
+    // const isDiffRes = useSelector((state) => state.toogleSlice.isDiffRes)
+    // const dispatch = useDispatch()
+
+
+    // function handleIsDiffRes() {
+    //     dispatch(toggleDiffRes())
+    // }
+    // function handleClearCart() {
+    //     dispatch(clearCart())
+    //     handleIsDiffRes()
+    //     toast.success("Cart is clear")
+    // }
 
     return (
         <div className='bg-white rounded-2xl p-4 m-4'>
