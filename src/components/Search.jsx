@@ -54,13 +54,18 @@ function Search() {
     }, [searchQuery])
 
     return (
-        <div className='w-full md:w-[800px] mx-auto'>
-            <input 
-                // onChange={(e) => setSearchQuery(e.target.value)} 
-                onKeyDown={handleSearchQuery}
-                className='border-2 px-10 py-3 focus:outline-none' 
-                type="text" 
-                placeholder='search for restaurant and food' />
+        <div className='w-full mt-10 md:w-[800px] mx-auto'>
+            <div className='w-full relative flex'>
+                <i className="fi fi-rr-angle-small-left text-2xl ml-2 mt-1 absolute top-1/2 -translate-y-1/2"></i>
+                <i className="fi fi-rr-search absolute top-1/2 right-0 -translate-y-1/2 mr-5"></i>
+                <input 
+                    // onChange={(e) => setSearchQuery(e.target.value)} 
+                    onKeyDown={handleSearchQuery}
+                    className='border-2 w-full px-10 py-3 text-xl focus:outline-none' 
+                    type="text" 
+                    placeholder='search for restaurant and food' 
+                />
+            </div>
             <div className='my-7 flex flex-wrap gap-3'>
                 {
                     filterOptions.map((filterName) => (
