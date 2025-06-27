@@ -2,10 +2,10 @@ import React from 'react'
 import { nonVeg, veg } from '../utils/links'
 import AddToCartBtn from './AddToCartBtn'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleDiffRes } from '../utils/toogleSlice'
+import { toggleDiffRes, toggleIsSimilarResDishes } from '../utils/toogleSlice'
 import { clearCart } from '../utils/cartSlice'
 
-function Dishes({ 
+function Dish({ 
     data: { 
         card: {
             card: {
@@ -22,7 +22,8 @@ function Dishes({
     let { id, name: resName, avgRating, sla: { slaString } } = resInfo
     
     // const isDiffRes = useSelector((state) => state.toogleSlice.isDiffRes)
-    // const dispatch = useDispatch()
+    const {id : cartResId} = useSelector((state) => state.cartSlice.resInfo)
+    const dispatch = useDispatch()
 
 
     // function handleIsDiffRes() {
@@ -33,6 +34,12 @@ function Dishes({
     //     handleIsDiffRes()
     //     toast.success("Cart is clear")
     // }
+
+    function handleSameRes() {
+        if(cartResId == id || !cartResId){
+            dispatch(toggleIsSimilarResDishes())
+        }
+    }
 
     return (
         <div className='bg-white rounded-2xl p-4 m-4'>
@@ -63,15 +70,17 @@ function Dishes({
                 </div>
                 <div className='w-[40%] md:w-[40%] relative h-full'>
                     <img className='rounded-xl aspect-square object-cover' src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/" + imageId} alt="" />
-                    <AddToCartBtn 
-                        info={info} 
-                        resInfo={resInfo} 
-                        // handleIsDiffRes={handleIsDiffRes}
-                    />
+                    <div onClick={handleSameRes}>
+                        <AddToCartBtn 
+                            info={info} 
+                            resInfo={resInfo} 
+                            // handleIsDiffRes={handleIsDiffRes}
+                        />
+                    </div>
                 </div>
             </div>
         </div>
     )
 }
 
-export default Dishes
+export default Dish

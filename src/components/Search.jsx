@@ -1,13 +1,21 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { CartContext, Coordinates } from '../context/contextApi'
-import Dishes from './Dishes'
 import SearchBarRestaurantData from './SearchBarRestaurantData'
+import Dish from './Dish'
+import { useDispatch, useSelector } from 'react-redux'
+import { toggleIsSimilarResDishes } from '../utils/toogleSlice'
 
 function Search() {
 
     const [searchQuery, setSearchQuery] = useState("")
     const [dishes, setDishes] = useState([])
     const [restaurantData, setRestaurantData] = useState([])
+    const [selectedResDish, setSelectedResDish] = useState(null)
+    const [similarResDishes, setSimilarResDishes] = useState([])
+
+    const isSimilarResDish = useSelector((state) => state.toogleSlice.isSimilarResDishes)
+    console.log(isSimilarResDish)
+    const dispatch = useDispatch()
 
     const filterOptions = ["Restaurant", "Dishes"]
 
@@ -24,7 +32,27 @@ function Search() {
         let val = e.target.value
         if(e.keyCode == 13){
             setSearchQuery(val)
+            setSelectedResDish(null)
+            setDishes([])
         }
+    }
+
+    
+    useEffect(() => {
+        if(isSimilarResDish){
+            fetchSimilarResDishes()
+        }
+    } , [isSimilarResDish])
+
+    
+    async function fetchSimilarResDishes() {
+        let data = await fetch(`https://www.swiggy.com/dapi/restaurants/search/v3?lat=${lat}&lng=${lng}&str=pizza&trackingId=undefined&submitAction=ENTER&selectedPLTab=dish-add&restaurantMenuUrl=%2Fcity%2Fnoida-1%2Flove-pizza-noida-expressway-rest1027234%3Fquery%3Dpizza&restaurantIdOfAddedItem=1027234&itemAdded=160532633`)
+        let res = await data.json()
+        // console.log(res?.data?.cards[1])
+        setSelectedResDish(res?.data?.cards[1])
+        setSimilarResDishes(res?.data?.cards[2]?.card?.card?.cards)
+        // console.log(res?.data?.cards[2]?.card?.card?.cards)
+        dispatch(toggleIsSimilarResDishes())
     }
 
     async function fetchDishes() {
@@ -49,6 +77,7 @@ function Search() {
         if (searchQuery === "") {
             return
         }
+        setSearchQuery("")
         fetchDishes()
         fetchRestaurantData()
     }, [searchQuery])
@@ -66,20 +95,31 @@ function Search() {
                     placeholder='search for restaurant and food' 
                 />
             </div>
-            <div className='my-7 flex flex-wrap gap-3'>
-                {
-                    filterOptions.map((filterName) => (
-                        <button onClick={() => handleFilterBtn(filterName)} className={'filterBtn flex gap-2 ' + (activeBtn === filterName ? "active" : "")}>
-                            <p>{filterName}</p>
-                        </button>
-                    ))
-                }
-            </div>
 
-            <div className='w-full md:w-[800px] grid grid-cols-1 md:grid-cols-2 gap-5 bg-[#f4f5f7]'>
-                {
+            {
+                !selectedResDish && (
+                    <div className='my-7 flex flex-wrap gap-3'>
+                    {
+                        filterOptions.map((filterName) => (
+                            <button onClick={() => handleFilterBtn(filterName)} className={'filterBtn flex gap-2 ' + (activeBtn === filterName ? "active" : "")}>
+                                <p>{filterName}</p>
+                            </button>
+                        ))
+                    }
+                    </div>
+                )
+            }
+
+            <div className='w-full md:w-[800px] mt-5 grid grid-cols-1 md:grid-cols-2 gap-5 bg-[#f4f5f7]'>
+                {selectedResDish 
+                ? <>
+                    <p>Item added to cart</p>
+                    <Dish data={selectedResDish}/>
+                    <p>More dishes from this restaurant</p>
+                </> 
+                :
                     activeBtn === "Dishes" ?
-                        dishes.map((data) => <Dishes data={data}/>)
+                        dishes.map((data) => <Dish data={data}/>)
                         :
                         restaurantData.map((data) => <SearchBarRestaurantData data={data}/>)
                 }

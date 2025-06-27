@@ -71,7 +71,6 @@ function Cart() {
         <div className='w-full'>
             <div className='w-[95%] md:w-[800px] mx-auto'>
                 <Link to={`/restaurantMenu/${resInfo.id}`}>
-                {console.log(resInfo.id)}
                     <div className='my-10 flex gap-5'>
                         <img className='rounded-xl w-40 aspect-square' src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/" + resInfo.cloudinaryImageId} alt="" />
                         <div>
