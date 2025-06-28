@@ -4,6 +4,7 @@ import TopRestaurant from './TopRestaurant';
 import OnlineFoodDelivery from './OnlineFoodDelivery';
 import { Coordinates } from '../context/contextApi';
 import { useSelector } from 'react-redux';
+import Shimmer from './Shimmer';
 
 function Body() {
 
@@ -69,17 +70,22 @@ function Body() {
 
     return (
         <div className='w-full'>
-            <div className='w-full px-10 sm:w-[80%] lg:w-[80%] mx-auto mt-1 overflow-hidden'>
-                {
-                    onYourMindData && (
-                        <>
-                            {onYourMindData && <OnYourMind data={onYourMindData} />}
-                            <TopRestaurant data={topRestaurantData} title={topResTitle} />
-                        </>
-                    )
-                }
-                {topRestaurantData && <OnlineFoodDelivery data={filterVal ? filteredData : topRestaurantData} title={onlineTitle} />}
-            </div>
+            {topRestaurantData.length ? (
+                <div className='w-full px-10 sm:w-[80%] lg:w-[80%] mx-auto mt-1 overflow-hidden'>
+                    {
+                        onYourMindData && (
+                            <>
+                                {onYourMindData && <OnYourMind data={onYourMindData} />}
+                                <TopRestaurant data={topRestaurantData} title={topResTitle} />
+                            </>
+                        )
+                    }
+                    {topRestaurantData && <OnlineFoodDelivery data={filterVal ? filteredData : topRestaurantData} title={onlineTitle} />}
+                </div>
+            ) : (
+                <Shimmer />
+            )}
+
         </div>
     )
 }

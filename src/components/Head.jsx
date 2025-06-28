@@ -75,7 +75,7 @@ function Head() {
         <div className='w-full'>
             <div onClick={handleVisibility} className={'w-full bg-black/50 h-full absolute z-30 ' + (visible ? "visible" : " invisible")}></div>
             <div className={'bg-white flex justify-end w-full md:w-[40%] h-full p-5 z-40 absolute duration-500 ' + (visible ? "left-0" : "-left-[100%]")}>
-                <div className='flex flex-col w-[50%] mr-6 mt-3 gap-4'>
+                <div className='flex flex-col w-full lg-[50%] mr-6 mt-3 gap-4'>
                     <i className='fi fi-br-cross' onClick={handleVisibility}></i>
                     <input type="text" className='border p-5 focus:outline-none focus:shadow-lg' onChange={(e) => searchResultFun(e.target.value)}/>
                     <div className='border p-5'>
@@ -121,7 +121,7 @@ function Head() {
 
         <div className='relative w-full'>
             <div className='w-full sticky bg-white z-20 top-0 shadow-md h-20 flex justify-center items-center'>
-                <div className='w-full sm:w-[80%] lg:w-[80%] flex justify-around gap-5'>
+                <div className='w-full sm:w-[80%] lg:w-full flex justify-around gap-5'>
                     <div className='flex items-center '>
                         <Link to={"/"}>
                             <div className='w-20'>

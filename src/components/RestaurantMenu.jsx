@@ -6,6 +6,7 @@ import { addToCart, clearCart } from '../utils/cartSlice'
 import toast from 'react-hot-toast'
 import AddToCartBtn from './AddToCartBtn'
 import { toggleDiffRes } from '../utils/toogleSlice'
+import { MenuShimmer } from './Shimmer'
 
 let veg = "https://i.pinimg.com/originals/e4/1f/f3/e41ff3b10a26b097602560180fb91a62.png"
 let nonVeg = "https://www.pngkey.com/png/full/245-2459071_non-veg-icon-non-veg-symbol-png.png"
@@ -176,7 +177,7 @@ function RestaurantMenu() {
                     }
                 </div>
 
-            </div> : "Loading..."}
+            </div> : <MenuShimmer />}
         </div>
     )
 }
@@ -246,7 +247,7 @@ function DetailMenuCard({ info, resInfo }) {
     const { name, defaultPrice, price, itemAttribute, ratings: { aggregatedRating: { rating, ratingCountV2 } }, description = "", imageId } = info;
 
     // const {cartData, setCartData} = useContext(CartContext)
-    
+
 
     // const isDiffRes = useSelector((state) => state.toogleSlice.isDiffRes)
     // const dispatch = useDispatch()
@@ -283,10 +284,10 @@ function DetailMenuCard({ info, resInfo }) {
                 </div>
                 <div className='w-[40%] md:w-[20%] relative h-full'>
                     <img className='rounded-xl aspect-square' src={"https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_300,h_300,c_fit/" + imageId} alt="" />
-                    <AddToCartBtn 
-                        info={info} 
-                        resInfo={resInfo} 
-                        // handleIsDiffRes={handleIsDiffRes}
+                    <AddToCartBtn
+                        info={info}
+                        resInfo={resInfo}
+                    // handleIsDiffRes={handleIsDiffRes}
                     />
                 </div>
             </div>
