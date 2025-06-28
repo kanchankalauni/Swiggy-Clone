@@ -3,7 +3,7 @@ import { CartContext, Coordinates } from '../context/contextApi'
 import SearchBarRestaurantData from './SearchBarRestaurantData'
 import Dish from './Dish'
 import { useDispatch, useSelector } from 'react-redux'
-import { toggleIsSimilarResDishes } from '../utils/toogleSlice'
+import { resetSimilarResDish } from '../utils/toogleSlice'
 
 function Search() {
 
@@ -13,46 +13,50 @@ function Search() {
     const [selectedResDish, setSelectedResDish] = useState(null)
     const [similarResDishes, setSimilarResDishes] = useState([])
 
-    const isSimilarResDish = useSelector((state) => state.toogleSlice.isSimilarResDishes)
-    console.log(isSimilarResDish)
+    const { coord: { lat, lng } } = useContext(Coordinates)
+
+    const { isSimilarResDishes, city, resLocation, resId, itemId } = useSelector((state) => state.toogleSlice.similarResDish)
+    console.log(isSimilarResDishes, city, resLocation, resId, itemId)
     const dispatch = useDispatch()
 
     const filterOptions = ["Restaurant", "Dishes"]
 
     const [activeBtn, setActiveBtn] = useState("Dishes")
 
-    const { coord: { lat, lng } } = useContext(Coordinates)
 
     function handleFilterBtn(filterName) {
         setActiveBtn(activeBtn === filterName ? activeBtn : filterName)
     }
 
-    let x = ""
     function handleSearchQuery(e) {
         let val = e.target.value
-        if(e.keyCode == 13){
+        if (e.keyCode == 13) {
             setSearchQuery(val)
             setSelectedResDish(null)
             setDishes([])
         }
     }
 
-    
+
     useEffect(() => {
-        if(isSimilarResDish){
+        if (isSimilarResDishes) {
             fetchSimilarResDishes()
         }
-    } , [isSimilarResDish])
+    }, [isSimilarResDishes])
 
-    
+
     async function fetchSimilarResDishes() {
-        let data = await fetch(`https://www.swiggy.com/dapi/restaurants/search/v3?lat=${lat}&lng=${lng}&str=pizza&trackingId=undefined&submitAction=ENTER&selectedPLTab=dish-add&restaurantMenuUrl=%2Fcity%2Fnoida-1%2Flove-pizza-noida-expressway-rest1027234%3Fquery%3Dpizza&restaurantIdOfAddedItem=1027234&itemAdded=160532633`)
+
+        let pathname = `/city/${city}/${resLocation}`
+        let encodedPath = encodeURIComponent(pathname)
+
+        let data = await fetch(`https://www.swiggy.com/dapi/restaurants/search/v3?lat=${lat}&lng=${lng}&str=${searchQuery}&trackingId=undefined&submitAction=ENTER&selectedPLTab=dish-add&restaurantMenuUrl=${encodedPath}-rest${resId}%3Fquery%3D${searchQuery}&restaurantIdOfAddedItem=${resId}&itemAdded=${itemId}`)
         let res = await data.json()
         // console.log(res?.data?.cards[1])
         setSelectedResDish(res?.data?.cards[1])
         setSimilarResDishes(res?.data?.cards[2]?.card?.card?.cards)
         // console.log(res?.data?.cards[2]?.card?.card?.cards)
-        dispatch(toggleIsSimilarResDishes())
+        dispatch(resetSimilarResDish())
     }
 
     async function fetchDishes() {
@@ -77,7 +81,7 @@ function Search() {
         if (searchQuery === "") {
             return
         }
-        setSearchQuery("")
+        // setSearchQuery("")
         fetchDishes()
         fetchRestaurantData()
     }, [searchQuery])
@@ -87,41 +91,47 @@ function Search() {
             <div className='w-full relative flex'>
                 <i className="fi fi-rr-angle-small-left text-2xl ml-2 mt-1 absolute top-1/2 -translate-y-1/2"></i>
                 <i className="fi fi-rr-search absolute top-1/2 right-0 -translate-y-1/2 mr-5"></i>
-                <input 
+                <input
                     // onChange={(e) => setSearchQuery(e.target.value)} 
                     onKeyDown={handleSearchQuery}
-                    className='border-2 w-full px-10 py-3 text-xl focus:outline-none' 
-                    type="text" 
-                    placeholder='search for restaurant and food' 
+                    className='border-2 w-full px-10 py-3 text-xl focus:outline-none'
+                    type="text"
+                    placeholder='search for restaurant and food'
                 />
             </div>
 
             {
                 !selectedResDish && (
                     <div className='my-7 flex flex-wrap gap-3'>
-                    {
-                        filterOptions.map((filterName) => (
-                            <button onClick={() => handleFilterBtn(filterName)} className={'filterBtn flex gap-2 ' + (activeBtn === filterName ? "active" : "")}>
-                                <p>{filterName}</p>
-                            </button>
-                        ))
-                    }
+                        {
+                            filterOptions.map((filterName) => (
+                                <button onClick={() => handleFilterBtn(filterName)} className={'filterBtn flex gap-2 ' + (activeBtn === filterName ? "active" : "")}>
+                                    <p>{filterName}</p>
+                                </button>
+                            ))
+                        }
                     </div>
                 )
             }
 
             <div className='w-full md:w-[800px] mt-5 grid grid-cols-1 md:grid-cols-2 gap-5 bg-[#f4f5f7]'>
-                {selectedResDish 
-                ? <>
-                    <p>Item added to cart</p>
-                    <Dish data={selectedResDish}/>
-                    <p>More dishes from this restaurant</p>
-                </> 
-                :
+                {selectedResDish
+                    ? <>
+                        <div>
+                            <p className='p-4'>Item added to cart</p>
+                            <Dish data={selectedResDish.card.card} />
+                            <p className='p-4'>More dishes from this restaurant</p>
+                        </div>
+                        <br />
+                        {
+                            similarResDishes.map((data) => <Dish data={{ ...data.card, restaurant: selectedResDish.card.card.restaurant }} />)
+                        }
+                    </>
+                    :
                     activeBtn === "Dishes" ?
-                        dishes.map((data) => <Dish data={data}/>)
+                        dishes.map((data) => <Dish data={data.card.card} />)
                         :
-                        restaurantData.map((data) => <SearchBarRestaurantData data={data}/>)
+                        restaurantData.map((data) => <SearchBarRestaurantData data={data} />)
                 }
             </div>
         </div>

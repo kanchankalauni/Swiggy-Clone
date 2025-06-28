@@ -6,7 +6,13 @@ const toogleSlice = createSlice({
         searchBarToogle : false, 
         loginToggle : false,
         isDiffRes : false,
-        isSimilarResDishes : false
+        similarResDish : {
+            isSimilarResDishes : false,
+            city : "",
+            resLocation : "",
+            resId : "",
+            itemId : ""
+        }
     },
     reducers : {
         toogleSearchBar : (state, action) => {
@@ -18,11 +24,20 @@ const toogleSlice = createSlice({
         toggleDiffRes : (state) => {
             state.isDiffRes = !state.isDiffRes
         },
-        toggleIsSimilarResDishes : (state) => {
-            state.isSimilarResDishes = !state.isSimilarResDishes
+        setSimilarResDish : (state, action) => {
+            state.similarResDish = action.payload
+        },
+        resetSimilarResDish : (state) => {
+            state.similarResDish = {
+                isSimilarResDishes : false,
+                city : "",
+                resLocation : "",
+                resId : "",
+                itemId : ""
+            }
         }
     }
 })
 
-export const { toogleSearchBar, toggleLogin, toggleDiffRes, toggleIsSimilarResDishes } = toogleSlice.actions
+export const { toogleSearchBar, toggleLogin, toggleDiffRes, setSimilarResDish, resetSimilarResDish } = toogleSlice.actions
 export default toogleSlice.reducer
