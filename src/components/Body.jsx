@@ -18,12 +18,27 @@ function Body() {
     async function fetchData() {
         const data = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=${lat}&lng=${lng}&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`)
         const result = await data.json()
-        // console.log(result.data)
+        console.log(result)
         setData(result.data)
         setTopResTitle(result?.data?.cards[1]?.card?.card?.header?.title)
         setOnlineTitle(result?.data?.cards[2]?.card?.card?.title)
-        setOnYourMindData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info)
-        setTopRestaurantData(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
+
+        let topRestaurantMainData = result?.data?.cards.find(
+            (data) => data?.card?.card?.id == "top_brands_for_you"
+        )?.card?.card?.gridElements?.infoWithStyle?.restaurants
+
+        let topRestaurantMainData2 = result?.data?.cards.find(
+            (data) => data?.card?.card?.id == "restaurant_grid_listing_v2"
+        )?.card?.card?.gridElements?.infoWithStyle?.restaurants
+
+        setTopRestaurantData(topRestaurantMainData || topRestaurantMainData2)
+
+        let onYourMindMainData = result?.data?.cards.find(
+            (data) => data?.card?.card?.id == "whats_on_your_mind"
+        )?.card?.card?.imageGridCards?.info
+
+        setOnYourMindData(onYourMindMainData)
+
     }
 
     useEffect(() => {
@@ -55,8 +70,14 @@ function Body() {
     return (
         <div className='w-full'>
             <div className='w-full px-10 sm:w-[80%] lg:w-[80%] mx-auto mt-1 overflow-hidden'>
-                {onYourMindData && <OnYourMind data={onYourMindData} />}
-                <TopRestaurant data={topRestaurantData} title={topResTitle} />
+                {
+                    onYourMindData && (
+                        <>
+                            {onYourMindData && <OnYourMind data={onYourMindData} />}
+                            <TopRestaurant data={topRestaurantData} title={topResTitle} />
+                        </>
+                    )
+                }
                 {topRestaurantData && <OnlineFoodDelivery data={filterVal ? filteredData : topRestaurantData} title={onlineTitle} />}
             </div>
         </div>

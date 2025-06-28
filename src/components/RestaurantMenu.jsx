@@ -44,13 +44,11 @@ function RestaurantMenu() {
 
         // https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=18.9690247&lng=72.8205292&restaurantId=233329&catalog_qa=undefined&submitAction=ENTER
         let res = await data.json();
-        // console.log(res);
 
         const resInfo = res?.data?.cards.find((data) =>
             data?.card?.card?.["@type"].includes("food.v2.Restaurant")
         )?.card?.card?.info;
 
-        // console.log(resInfo);
 
         const discountInfo = res?.data?.cards.find((data) =>
             data?.card?.card?.["@type"].includes("v2.GridWidget")
@@ -61,7 +59,6 @@ function RestaurantMenu() {
 
         let actualMenu = res?.data?.cards.find((data) => data?.groupedCard);
 
-        // console.log(res);
 
         setTopPicksData(
             (actualMenu?.groupedCard?.cardGroupMap?.REGULAR?.cards).filter(
@@ -135,7 +132,9 @@ function RestaurantMenu() {
                 </div>
                 <h2 className='text-center mt-5'>MENU</h2>
                 <div className='w-full mt-5 relative cursor-pointer'>
-                    <div className='w-full p-3 rounded-xl font-semibold bg-gray-100 text-center text-gray-600'>Search for dishes</div>
+                    <Link to={"/search"}>
+                        <div className='w-full p-3 rounded-xl font-semibold bg-gray-100 text-center text-gray-600'>Search for dishes</div>
+                    </Link>
                     <i className={"fi fi-rr-search absolute top-3 right-4"}></i>
                 </div>
 
