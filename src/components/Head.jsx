@@ -75,7 +75,7 @@ function Head() {
         <div className='w-full'>
             <div onClick={handleVisibility} className={'w-full bg-black/50 h-full absolute z-30 ' + (visible ? "visible" : " invisible")}></div>
             <div className={'bg-white flex justify-end w-full md:w-[40%] h-full p-5 z-40 absolute duration-500 ' + (visible ? "left-0" : "-left-[100%]")}>
-                <div className='flex flex-col w-full lg-[50%] mr-6 mt-3 gap-4'>
+                <div className='flex flex-col w-full lg:w-[50%] mr-6 mt-3 gap-4'>
                     <i className='fi fi-br-cross' onClick={handleVisibility}></i>
                     <input type="text" className='border p-5 focus:outline-none focus:shadow-lg' onChange={(e) => searchResultFun(e.target.value)}/>
                     <div className='border p-5'>
@@ -107,7 +107,7 @@ function Head() {
         <div className='w-full'>
             <div onClick={handleLogin} className={'w-full bg-black/50 h-full absolute z-30 ' + (loginVisible ? "visible" : " invisible")}></div>
             <div className={'bg-white flex w-full md:w-[40%] h-full p-5 z-40 fixed duration-500 ' + (loginVisible ? "right-0" : "-right-[100%]")}>
-                <div className='m-3 w-[60%]'>
+                <div className='m-3 w-full lg:w-[60%]'>
                     <i className='fi fi-br-cross' onClick={handleLogin}></i>
                     <div className='my-10 w-full flex justify-between items-center'>
                         <h2 className='font-semibold text-4xl border-b-2 border-black pb-5'>Login</h2>

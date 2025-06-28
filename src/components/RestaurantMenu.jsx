@@ -43,7 +43,6 @@ function RestaurantMenu() {
             `https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${mainId}&catalog_qa=undefined&submitAction=ENTER`
         );
 
-        // https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=18.9690247&lng=72.8205292&restaurantId=233329&catalog_qa=undefined&submitAction=ENTER
         let res = await data.json();
 
         const resInfo = res?.data?.cards.find((data) =>
@@ -232,6 +231,7 @@ function MenuCard({ card, resInfo }) {
     }
 }
 
+
 function DetailMenu({ itemCards, resInfo }) {
     return (
         <div className='my-5'>
@@ -241,6 +241,7 @@ function DetailMenu({ itemCards, resInfo }) {
         </div>
     )
 }
+
 
 function DetailMenuCard({ info, resInfo }) {
 
