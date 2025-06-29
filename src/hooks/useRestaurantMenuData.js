@@ -22,7 +22,7 @@ function useRestaurantMenuData() {
   async function fetchMenu() {
           // console.log(mainId.split("rest")[1]);
           let data = await fetch(
-              `https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${mainId}&catalog_qa=undefined&submitAction=ENTER`
+              `${import.meta.env.VITE_BASE_URL}/menu/pl?page-type=REGULAR_MENU&complete-menu=true&lat=${lat}&lng=${lng}&restaurantId=${mainId}&catalog_qa=undefined&submitAction=ENTER`
           );
   
           let res = await data.json();

@@ -7,7 +7,7 @@ function OnYourMind({data}) {
     const [value, setValue] = useState(0);
 
     // async function fetchData() {
-    //     const data = await fetch("https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=28.65200&lng=77.16630&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+    //     const data = await fetch(`${import.meta.env.VITE_BASE_URL}/restaurants/list/v5?lat=28.65200&lng=77.16630&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`)
     //     const result = await data.json()
     //     setData(result?.data?.cards[0]?.card?.card?.imageGridCards?.info)
     // }
@@ -42,7 +42,7 @@ function OnYourMind({data}) {
             className={`flex mt-2 duration-300`}>
             {
                 data.map((item) => (
-                    <img className='w-40' src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/${item.imageId}`}/>
+                    <img key={item.id} className='w-40' src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_288,h_360/${item.imageId}`}/>
                 ))
             }
         </div>

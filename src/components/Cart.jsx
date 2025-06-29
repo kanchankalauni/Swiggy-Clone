@@ -16,13 +16,13 @@ function Cart() {
     const navigate = useNavigate()
     const cartData = useSelector((state) => state.cartSlice.cartItems)
     const resInfo = useSelector((state) => state.cartSlice.resInfo)
-    console.log(resInfo)
+    // console.log(resInfo)
     const dispatch = useDispatch()
     // console.log(cartData)
     // let totalPrice = cartData.reduce((acc, curVal) => (acc + (curVal.price / 100 || curVal.defaultPrice / 100)), 0)
     let totalPrice = cartData.reduce((acc, curVal) => {
         const price = curVal.price ?? curVal.defaultPrice;
-        console.log(price)
+        // console.log(price)
         return acc + price / 100;
     }, 0);
 
@@ -86,7 +86,7 @@ function Cart() {
                         let trimDes = description.substring(0, 140) + "..."
                         return (
                             <>
-                                <div className='flex w-full my-5 justify-between min-h-[182px]'>
+                                <div key={imageId} className='flex w-full my-5 justify-between min-h-[182px]'>
                                     <div className='w-[55%] md:w-[70%]'>
                                         <img className='w-5 rounded-sm' src={itemAttribute && itemAttribute.vegClassifier === "VEG" ? veg : nonVeg} alt="" />
                                         <h1 className='font-semibold text-lg'>{name}</h1>

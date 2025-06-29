@@ -75,8 +75,8 @@ function RestaurantMenu() {
                     </div>
                     <div className='flex gap-4 mt-5'>
                         {
-                            discountData.map((data) => (
-                                <Discount data={data} />
+                            discountData.map((data, i) => (
+                                <Discount data={data} key={i}/>
                             ))
                         }
                     </div>
@@ -104,8 +104,8 @@ function RestaurantMenu() {
                         </div>
                         <div className='flex gap-4 mt-5'>
                             {
-                                topPicksData.card.card.carousel.map(({ creativeId, dish: { info: { defaultPrice, price } } }) => (
-                                    <div className='min-w-[400px] h-[405px] relative'>
+                                topPicksData.card.card.carousel.map(({ creativeId, dish: { info: { defaultPrice, price, id } } }) => (
+                                    <div key={id} className='min-w-[400px] h-[405px] relative'>
                                         <img className='w-full h-full' src={`https://media-assets.swiggy.com/swiggy/image/upload/fl_lossy,f_auto,q_auto,w_292,h_300/` + creativeId} alt="" />
                                         <div className='absolute bottom-4 text-white flex justify-between w-full px-5'>
                                             <p>₹{defaultPrice / 100 || price / 100}</p>
@@ -173,8 +173,8 @@ function MenuCard({ card, resInfo }) {
             <div>
                 <h1 className='font-bold text-xl'>{title}</h1>
                 {
-                    categories.map((data) => (
-                        <MenuCard card={data} resInfo={resInfo} />
+                    categories.map((data, i) => (
+                        <MenuCard card={data} resInfo={resInfo} key={i} />
                     ))
                 }
             </div>
@@ -187,7 +187,7 @@ function DetailMenu({ itemCards, resInfo }) {
     return (
         <div className='my-5'>
             {
-                itemCards.map(({ card: { info } }) => (<DetailMenuCard info={info} resInfo={resInfo} />))
+                itemCards.map(({ card: { info } }) => (<DetailMenuCard key={info.id} info={info} resInfo={resInfo} />))
             }
         </div>
     )

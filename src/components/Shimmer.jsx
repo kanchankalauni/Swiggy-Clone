@@ -12,7 +12,7 @@ function Shimmer() {
             </div>
 
             <div className='w-[85%] mx-auto pt-6 flex flex-wrap justify-center gap-8'>
-                {Array(12).fill("").map(data => <div className='min-w-[295px] h-[182px] animate rounded-md'></div>)}
+                {Array(12).fill("").map((data, i) => <div key={i} className='min-w-[295px] h-[182px] animate rounded-md'></div>)}
             </div>
         </div>
     )

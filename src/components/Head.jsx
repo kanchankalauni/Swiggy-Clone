@@ -51,7 +51,7 @@ function Head() {
 
     async function searchResultFun(val) {
         if(val == "") return
-        const res = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/misc/place-autocomplete?input=${val}`);
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/misc/place-autocomplete?input=${val}`);
         const data = await res.json();
         setSearchResult(data.data)
     }
@@ -60,13 +60,13 @@ function Head() {
         if(id == "") return
         // console.log(id)
         handleVisibility();
-        const res = await fetch(`https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/misc/address-recommend?place_id=${id}`);
+        const res = await fetch(`${import.meta.env.VITE_BASE_URL}/misc/address-recommend?place_id=${id}`);
         const data = await res.json();
         setCoord({
             lat : data.data[0].geometry.location.lat,
             lng : data.data[0].geometry.location.lng
         })
-        console.log(data)
+        // console.log(data)
         setAddress(data.data[0].formatted_address);
     }
 
@@ -84,7 +84,7 @@ function Head() {
                                 searchResult.map((data, index) => {
                                     const isLast = (index === searchResult.length - 1)
                                     return(
-                                    <div className='my-5'>
+                                    <div className='my-5' key={index}>
                                         <div className='flex gap-4'>
                                             <i className="fi mt-1 fi-rr-marker"></i>
                                             <li onClick={() => fetchLatAndLng(data.place_id)}>
@@ -138,17 +138,23 @@ function Head() {
                     </div>
                     <div className='hidden md:flex items-center gap-2 md:gap-14'>
                         {
-                            navItems.map((data) => (
+                            navItems.map((data, i) => (
                                 data.name == "Sign in" ? 
-                                <div onClick={handleLogin}>
+                                <div onClick={handleLogin} key={data.path}>
                                     <div className='flex items-center gap-3'>
-                                        { userData ? <img src={userData.photo} alt="" /> : <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>}
+                                        { userData ? 
+                                            <div className='w-10 h-10 rounded-full'>
+                                                <img src={userData.photo} alt="" />
+                                            </div> 
+                                            : 
+                                            <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
+                                        }
                                         <p className='text-lg font-medium text-gray-700'>{userData ? userData.name : data.name}</p>
                                         { data.name === "Cart" && !cartData.length == 0 && <p>{cartData.length}</p>}
                                     </div>
                                 </div> 
                                 : 
-                                <Link to={data.path}>
+                                <Link to={data.path} key={data.path}>
                                     <div className='flex items-center gap-3'>
                                         <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
                                         <p className='text-lg font-medium text-gray-700'>{data.name}</p>
@@ -160,13 +166,13 @@ function Head() {
                     </div>
                     <div className='flex items-center md:hidden gap-10 mr-4'>
                         {
-                            navItems.map(data => (
+                            navItems.map((data, i) => (
                                 data.name == "Sign in" ? (
-                                    <div onClick={handleLogin}>
+                                    <div  onClick={handleLogin} key={data.path}>
                                         <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
                                     </div>
                                 ) :
-                                <Link to={data.path}>
+                                <Link to={data.path} key={data.path}>
                                     <div className='flex items-center gap-3'>
                                         <i className={`mt-1 text-xl text-gray-700 fi ` + data.image}></i>
                                         {

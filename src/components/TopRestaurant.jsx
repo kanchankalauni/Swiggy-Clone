@@ -8,7 +8,7 @@ function TopRestaurant({data = [], title}) {
     const [value, setValue] = useState(0);
 
     // async function fetchData() {
-    //     const data = await fetch("https://cors-by-codethread-for-swiggy.vercel.app/cors/dapi/restaurants/list/v5?lat=28.65200&lng=77.16630&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING")
+    //     const data = await fetch(`${import.meta.env.VITE_BASE_URL}/restaurants/list/v5?lat=28.65200&lng=77.16630&is-seo-homepage-enabled=true&page_type=DESKTOP_WEB_LISTING`)
     //     const result = await data.json()
     //     // console.log(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
     //     setData(result?.data?.cards[1]?.card?.card?.gridElements?.infoWithStyle?.restaurants)
@@ -42,7 +42,7 @@ function TopRestaurant({data = [], title}) {
         <div className={`flex mt-4 gap-5 duration-300`} style={{translate : `-${value}%`}}>
             {
                 data.map(({info, cta : {link}}) => (
-                    <RestaurantCard info ={info} link={link} />
+                    <RestaurantCard info ={info} link={link} key={info.id}/>
                 ))
             }
         </div>

@@ -23,10 +23,10 @@ function OnlineFoodDelivery({data , title}) {
 
         <div className='my-7 flex flex-wrap gap-3'>
         {
-            filterOptions.map((filterName) => (
-                <button onClick={() => handleFilterBtn(filterName)} className={'filterBtn flex gap-2 ' + (activeBtn === filterName ? "active" : "")}>
-                <p>{filterName}</p>
-                <i className='fi text-sm mt-1 fi-br-cross hidden'></i>
+            filterOptions.map((filterName, i) => (
+                <button key={i} onClick={() => handleFilterBtn(filterName)} className={'filterBtn flex gap-2 ' + (activeBtn === filterName ? "active" : "")}>
+                    <p>{filterName}</p>
+                    <i className='fi text-sm mt-1 fi-br-cross hidden'></i>
                 </button>
             ))
         }
@@ -35,7 +35,7 @@ function OnlineFoodDelivery({data , title}) {
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 2xl:grid-cols-4 gap-10 mt-5">
             {
                 data.map(({info, cta : {link}}) => (
-                    <RestaurantCard info ={info}  link={link} currValue={true} />
+                    <RestaurantCard info ={info}  link={link} currValue={true} key={info.id}/>
                 ))
             }
         </div>
