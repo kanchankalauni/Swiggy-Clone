@@ -1,9 +1,10 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { CartContext, Coordinates } from '../context/contextApi'
-import SearchBarRestaurantData from './SearchBarRestaurantData'
+import SearchBarRestaurantData, { withHoc } from './SearchBarRestaurantData'
 import Dish from './Dish'
 import { useDispatch, useSelector } from 'react-redux'
 import { resetSimilarResDish } from '../utils/toogleSlice'
+import { MenuShimmer } from './Shimmer'
 
 function Search() {
 
@@ -15,8 +16,10 @@ function Search() {
 
     const { coord: { lat, lng } } = useContext(Coordinates)
 
+    const PromotedRes = withHoc(SearchBarRestaurantData)
+
     const { isSimilarResDishes, city, resLocation, resId, itemId } = useSelector((state) => state.toogleSlice.similarResDish)
-    console.log(isSimilarResDishes, city, resLocation, resId, itemId)
+    // console.log(isSimilarResDishes, city, resLocation, resId, itemId)
     const dispatch = useDispatch()
 
     const filterOptions = ["Restaurant", "Dishes"]
@@ -128,10 +131,15 @@ function Search() {
                         }
                     </>
                     :
-                    activeBtn === "Dishes" ?
+                    activeBtn === "Dishes" ? (
                         dishes.map((data) => <Dish data={data.card.card} />)
-                        :
-                        restaurantData.map((data) => <SearchBarRestaurantData data={data} />
+                    ) : (
+                        restaurantData.map((data) => (
+                            data?.card?.card?.info?.promoted ? 
+                                <PromotedRes data={data}/> :
+                                <SearchBarRestaurantData data={data} />
+                            )
+                        )
                     )
                 }
             </div>

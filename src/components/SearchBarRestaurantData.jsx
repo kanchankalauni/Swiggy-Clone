@@ -31,3 +31,14 @@ function SearchBarRestaurantData({
 }
 
 export default SearchBarRestaurantData
+
+export function withHoc(WrappedCom) {
+    return (prop) => {
+        return (
+            <div className="relative">
+                <p className="absolute top-10 text-sm bg-gray-700 px-1 left-5 text-white rounded-md">Ad</p>
+                <WrappedCom {...prop} />
+            </div>
+        );
+    };
+}
