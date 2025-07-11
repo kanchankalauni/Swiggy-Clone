@@ -59,10 +59,12 @@ function Cart() {
     }
 
     if (cartData.length === 0) {
-        return <div className='w-full'>
-            <div className='w-[50%] mx-auto'>
-                <h1>Kuch order krle bhai bhuka marega kya....</h1>
-                <Link to={"/"} className='bg-green-500 p-2 inline-block my-3'>Yaha se kr le bhai order</Link>
+        return <div className='w-full h-96 flex items-center justify-center'>
+            <div className='w-[50%] mx-auto text-center flex flex-col items-center'>
+                <img className='w-52' src="https://thumbs.dreamstime.com/b/explore-vibrant-cartoon-image-young-chef-happily-cooking-oil-pan-perfect-food-related-projects-children-375870520.jpg" alt="" />
+                <h1 className='font-semibold text-xl'>Your cart is empty</h1>
+                <p className='opacity-70'>You can go to home page to view more restaurants</p>
+                <Link to={"/"} className='bg-orange-600 py-2 px-5 inline-block my-3 text-white font-semibold'>SEE RESTAURANTS NEAR YOU</Link>
             </div>
         </div>
     }
